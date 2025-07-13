@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
+import { useState } from "react";
 
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import {
   Building2,
   Users,
@@ -14,119 +15,220 @@ import {
   GraduationCap,
   UserPlus,
   Scale,
-} from "lucide-react"
+  LogIn,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export function DemoNavigation() {
-  const router = useRouter()
+  const router = useRouter();
+  const [selectedRole, setSelectedRole] = useState<string>("");
+  const [username, setUsername] = useState("");
 
-  const handleRoleSelect = (role: string) => {
-    try {
-      localStorage.setItem("userRole", role)
-    } catch (error) {
-      console.error("Error setting localStorage:", error)
+  const roles = [
+    {
+      id: "admin",
+      name: "Admin",
+      icon: Shield,
+      description: "Configure organization settings and voting rules",
+    },
+    {
+      id: "shareholder",
+      name: "Shareholder",
+      icon: User,
+      description: "View shareholding and delegate voting rights",
+    },
+    {
+      id: "assembly",
+      name: "General Assembly",
+      icon: Users,
+      description: "Participate in meetings and vote on resolutions",
+    },
+    {
+      id: "chairman",
+      name: "Chairman",
+      icon: UserCog,
+      description: "Create meetings, set agendas, and monitor voting",
+    },
+    {
+      id: "md",
+      name: "Managing Director",
+      icon: Briefcase,
+      description: "Oversee operations and strategic initiatives",
+    },
+    {
+      id: "bod",
+      name: "BOD Member",
+      icon: UserCheck,
+      description: "Track KPIs and monitor implementation",
+    },
+    {
+      id: "ceo",
+      name: "CEO",
+      icon: GraduationCap,
+      description: "Review and implement approved resolutions",
+    },
+    {
+      id: "committee",
+      name: "Committee Member",
+      icon: UserPlus,
+      description: "Participate in specialized committee activities",
+    },
+    {
+      id: "legal",
+      name: "Legal Consultant",
+      icon: Scale,
+      description: "External consultant operations",
+    },
+  ];
+
+  const handleLogin = () => {
+    if (!selectedRole || !username.trim()) {
+      return;
     }
-    router.push("/dashboard")
-  }
+
+    try {
+      localStorage.setItem("userRole", selectedRole);
+      localStorage.setItem("username", username.trim());
+    } catch (error) {
+      console.error("Error setting localStorage:", error);
+    }
+    router.push("/dashboard");
+  };
+
+  const selectedRoleData = roles.find((role) => role.id === selectedRole);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-corporate-50 to-white p-4">
-      <div className="mb-8 flex items-center space-x-2">
-        <Building2 className="h-12 w-12 text-corporate-600" />
-        <h1 className="text-4xl font-bold text-corporate-800">GovernancePro</h1>
-      </div>
-
-      <Card className="w-full max-w-6xl border-corporate-100 shadow-lg">
-        <CardHeader className="text-center">
-          <CardTitle className="text-3xl text-corporate-800">Governance Platform Demo</CardTitle>
-          <CardDescription className="text-lg">Select a role to explore the different dashboards</CardDescription>
-        </CardHeader>
-
-        <CardContent>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <RoleCard
-              title="Admin"
-              description="Configure organization settings and voting rules"
-              icon={<Shield className="h-10 w-10 text-corporate-500" />}
-              onClick={() => handleRoleSelect("admin")}
-            />
-
-            <RoleCard
-              title="Shareholder"
-              description="View shareholding, delegate voting rights, and attend meetings"
-              icon={<User className="h-10 w-10 text-corporate-500" />}
-              onClick={() => handleRoleSelect("shareholder")}
-            />
-
-            <RoleCard
-              title="General Assembly"
-              description="Participate in meetings and vote on resolutions"
-              icon={<Users className="h-10 w-10 text-corporate-500" />}
-              onClick={() => handleRoleSelect("assembly")}
-            />
-
-            <RoleCard
-              title="Chairman"
-              description="Create meetings, set agendas, and monitor voting"
-              icon={<UserCog className="h-10 w-10 text-corporate-500" />}
-              onClick={() => handleRoleSelect("chairman")}
-            />
-
-            <RoleCard
-              title="Managing Director"
-              description="Oversee operations and strategic initiatives"
-              icon={<Briefcase className="h-10 w-10 text-corporate-500" />}
-              onClick={() => handleRoleSelect("md")}
-            />
-
-            <RoleCard
-              title="BOD Member"
-              description="Track KPIs and monitor implementation of resolutions"
-              icon={<UserCheck className="h-10 w-10 text-corporate-500" />}
-              onClick={() => handleRoleSelect("bod")}
-            />
-
-            <RoleCard
-              title="CEO"
-              description="Review and implement approved resolutions"
-              icon={<GraduationCap className="h-10 w-10 text-corporate-500" />}
-              onClick={() => handleRoleSelect("ceo")}
-            />
-
-            <RoleCard
-              title="Committee Member"
-              description="Participate in specialized committee activities"
-              icon={<UserPlus className="h-10 w-10 text-corporate-500" />}
-              onClick={() => handleRoleSelect("committee")}
-            />
-
-            <RoleCard
-              title="Legal Consultant"
-              description="Single-person operation mode for external consultants"
-              icon={<Scale className="h-10 w-10 text-corporate-500" />}
-              onClick={() => handleRoleSelect("legal")}
-            />
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-corporate-50 via-white to-corporate-100 p-4">
+      <div className="w-full max-w-md">
+        {/* Logo and Title */}
+        <div className="mb-8 text-center">
+          <div className="mb-4 flex justify-center">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-corporate-600 shadow-lg">
+              <Building2 className="h-10 w-10 text-white" />
+            </div>
           </div>
-        </CardContent>
-
-        <CardFooter className="flex justify-center border-t border-corporate-100 p-6">
-          <p className="text-center text-sm text-muted-foreground">
-            This is a demo of a corporate governance platform. Select any role to explore the interface.
-            <br />© 2025 GovernancePro. All rights reserved.
+          <h1 className="text-3xl font-bold text-corporate-800">
+            GovernancePro
+          </h1>
+          <p className="mt-2 text-corporate-600">
+            Corporate Governance Platform
           </p>
-        </CardFooter>
-      </Card>
+        </div>
+
+        {/* Login Card */}
+        <Card className="border-corporate-200 shadow-xl">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl text-corporate-800">
+              Sign In
+            </CardTitle>
+            <CardDescription>
+              Enter your credentials and select your role to access the platform
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="space-y-6">
+            {/* Username Input */}
+            <div className="space-y-2">
+              <Label htmlFor="username" className="text-corporate-700">
+                Username
+              </Label>
+              <Input
+                id="username"
+                type="text"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="border-corporate-200 focus:border-corporate-500 focus:ring-corporate-500"
+              />
+            </div>
+
+            {/* Role Selection */}
+            <div className="space-y-2">
+              <Label htmlFor="role" className="text-corporate-700">
+                Select Your Role
+              </Label>
+              <Select value={selectedRole} onValueChange={setSelectedRole}>
+                <SelectTrigger className="border-corporate-200 focus:border-corporate-500 focus:ring-corporate-500">
+                  <SelectValue placeholder="Choose your role" />
+                </SelectTrigger>
+                <SelectContent>
+                  {roles.map((role) => {
+                    const IconComponent = role.icon;
+                    return (
+                      <SelectItem key={role.id} value={role.id}>
+                        <div className="flex items-center space-x-2">
+                          <IconComponent className="h-4 w-4 text-corporate-500" />
+                          <span>{role.name}</span>
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Role Description */}
+            {selectedRoleData && (
+              <div className="rounded-lg bg-corporate-50 p-3 border border-corporate-200">
+                <div className="flex items-center space-x-2 mb-1">
+                  <selectedRoleData.icon className="h-4 w-4 text-corporate-600" />
+                  <span className="font-medium text-corporate-800">
+                    {selectedRoleData.name}
+                  </span>
+                </div>
+                <p className="text-sm text-corporate-600">
+                  {selectedRoleData.description}
+                </p>
+              </div>
+            )}
+          </CardContent>
+
+          <CardFooter>
+            <Button
+              onClick={handleLogin}
+              disabled={!selectedRole || !username.trim()}
+              className="w-full bg-corporate-600 hover:bg-corporate-700 text-white"
+            >
+              <LogIn className="mr-2 h-4 w-4" />
+              Sign In to Dashboard
+            </Button>
+          </CardFooter>
+        </Card>
+
+        {/* Footer */}
+        <div className="mt-8 text-center">
+          <p className="text-sm text-corporate-500">
+            © 2025 GovernancePro. All rights reserved.
+          </p>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
 interface RoleCardProps {
-  title: string
-  description: string
-  icon: React.ReactNode
-  onClick: () => void
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  onClick: () => void;
 }
 
 function RoleCard({ title, description, icon, onClick }: RoleCardProps) {
@@ -143,8 +245,10 @@ function RoleCard({ title, description, icon, onClick }: RoleCardProps) {
         <p className="text-sm text-muted-foreground">{description}</p>
       </CardContent>
       <CardFooter>
-        <Button className="bg-corporate-600 hover:bg-corporate-700">Enter Dashboard</Button>
+        <Button className="bg-corporate-600 hover:bg-corporate-700">
+          Enter Dashboard
+        </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }
