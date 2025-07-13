@@ -68,15 +68,23 @@ export default function DashboardPage() {
       return <CommitteeDashboard />;
     case "legal":
       return <LegalDashboard />;
-    // Social platform roles
+    // Social platform roles - temporary placeholders
     case "bod-candidate":
-      return <BODCandidateDashboard />;
     case "company-recruiter":
-      return <CompanyRecruiterDashboard />;
     case "investment-analyst":
-      return <InvestmentAnalystDashboard />;
     case "community-member":
-      return <CommunityMemberDashboard />;
+      return (
+        <div className="flex items-center justify-center h-[60vh] flex-col space-y-4">
+          <div className="text-2xl font-bold text-purple-800">
+            {userRole === "bod-candidate" && "BOD Candidate Dashboard"}
+            {userRole === "company-recruiter" && "Company Recruiter Dashboard"}
+            {userRole === "investment-analyst" &&
+              "Investment Analyst Dashboard"}
+            {userRole === "community-member" && "Community Member Dashboard"}
+          </div>
+          <div className="text-purple-600">Coming Soon - Under Development</div>
+        </div>
+      );
     default:
       return <ShareholderDashboard />;
   }
