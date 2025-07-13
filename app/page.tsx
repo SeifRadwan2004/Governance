@@ -1,5 +1,5 @@
-import { DemoNavigation } from "@/components/demo-navigation"
+import { PlatformSelection } from "@/components/platform-selection";
 
 export default function Home() {
-  return <DemoNavigation />
+  return <PlatformSelection />;
 }
