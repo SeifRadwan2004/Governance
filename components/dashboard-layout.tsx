@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
   Building2,
@@ -20,11 +20,11 @@ import {
   UserCheck,
   Briefcase,
   Shield,
-} from "lucide-react"
+} from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,7 +32,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -44,10 +44,16 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { Notification } from "@/components/notification"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+} from "@/components/ui/sidebar";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Notification } from "@/components/notification";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const userProfiles = {
   admin: {
@@ -95,58 +101,79 @@ const userProfiles = {
     avatar: "/avatars/legal.png",
     initials: "RG",
   },
-}
+  // Social platform roles
+  "bod-candidate": {
+    name: "Sarah Elizabeth Johnson",
+    avatar: "/avatars/sarah-johnson.png",
+    initials: "SJ",
+  },
+  "company-recruiter": {
+    name: "Michael Thompson",
+    avatar: "/avatars/michael-recruiter.png",
+    initials: "MT",
+  },
+  "investment-analyst": {
+    name: "Jessica Chen",
+    avatar: "/avatars/jessica-analyst.png",
+    initials: "JC",
+  },
+  "community-member": {
+    name: "David Rodriguez",
+    avatar: "/avatars/david-community.png",
+    initials: "DR",
+  },
+};
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-  const router = useRouter()
-  const [userRole, setUserRole] = useState<string>("")
-  const [showNotification, setShowNotification] = useState(false)
+  const pathname = usePathname();
+  const router = useRouter();
+  const [userRole, setUserRole] = useState<string>("");
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     // Get user role from localStorage with a try-catch to handle errors
     try {
-      const storedRole = localStorage.getItem("userRole")
+      const storedRole = localStorage.getItem("userRole");
       if (storedRole) {
-        setUserRole(storedRole)
+        setUserRole(storedRole);
       } else {
         // Default to shareholder if no role is set
-        setUserRole("shareholder")
-        localStorage.setItem("userRole", "shareholder")
+        setUserRole("shareholder");
+        localStorage.setItem("userRole", "shareholder");
       }
     } catch (error) {
-      console.error("Error accessing localStorage:", error)
+      console.error("Error accessing localStorage:", error);
       // Set a default role for demo purposes if localStorage fails
-      setUserRole("shareholder")
+      setUserRole("shareholder");
     }
 
     // Show notification after a delay
     const timer = setTimeout(() => {
-      setShowNotification(true)
-    }, 2000)
+      setShowNotification(true);
+    }, 2000);
 
-    return () => clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleRoleChange = (newRole: string) => {
     try {
-      localStorage.setItem("userRole", newRole)
-      setUserRole(newRole)
-      router.push("/dashboard")
+      localStorage.setItem("userRole", newRole);
+      setUserRole(newRole);
+      router.push("/dashboard");
     } catch (error) {
-      console.error("Error setting role:", error)
+      console.error("Error setting role:", error);
     }
-  }
+  };
 
   const handleLogout = () => {
-    router.push("/")
-  }
+    router.push("/");
+  };
 
   const userProfile = userRole
     ? userProfiles[userRole as keyof typeof userProfiles]
-    : { name: "User", avatar: "", initials: "U" }
+    : { name: "User", avatar: "", initials: "U" };
 
-  if (!userRole) return null
+  if (!userRole) return null;
 
   // Determine sidebar items based on role
   const getSidebarItems = () => {
@@ -155,31 +182,79 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         href: "/dashboard",
         icon: <LayoutDashboard className="mr-2 h-4 w-4" />,
         label: "Dashboard",
-        roles: ["admin", "shareholder", "assembly", "chairman", "md", "bod", "ceo", "committee", "legal"],
+        roles: [
+          "admin",
+          "shareholder",
+          "assembly",
+          "chairman",
+          "md",
+          "bod",
+          "ceo",
+          "committee",
+          "legal",
+        ],
       },
       {
         href: "/meetings",
         icon: <Calendar className="mr-2 h-4 w-4" />,
         label: "Meetings",
-        roles: ["admin", "shareholder", "assembly", "chairman", "md", "bod", "ceo", "committee", "legal"],
+        roles: [
+          "admin",
+          "shareholder",
+          "assembly",
+          "chairman",
+          "md",
+          "bod",
+          "ceo",
+          "committee",
+          "legal",
+        ],
       },
       {
         href: "/voting",
         icon: <Vote className="mr-2 h-4 w-4" />,
         label: "Voting",
-        roles: ["admin", "shareholder", "assembly", "chairman", "md", "bod", "legal"],
+        roles: [
+          "admin",
+          "shareholder",
+          "assembly",
+          "chairman",
+          "md",
+          "bod",
+          "legal",
+        ],
       },
       {
         href: "/documents",
         icon: <FileText className="mr-2 h-4 w-4" />,
         label: "Documents",
-        roles: ["admin", "shareholder", "assembly", "chairman", "md", "bod", "ceo", "committee", "legal"],
+        roles: [
+          "admin",
+          "shareholder",
+          "assembly",
+          "chairman",
+          "md",
+          "bod",
+          "ceo",
+          "committee",
+          "legal",
+        ],
       },
       {
         href: "/messages",
         icon: <Mail className="mr-2 h-4 w-4" />,
         label: "Messages",
-        roles: ["admin", "shareholder", "assembly", "chairman", "md", "bod", "ceo", "committee", "legal"],
+        roles: [
+          "admin",
+          "shareholder",
+          "assembly",
+          "chairman",
+          "md",
+          "bod",
+          "ceo",
+          "committee",
+          "legal",
+        ],
       },
       {
         href: "/shareholders",
@@ -211,12 +286,12 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         label: "Admin Panel",
         roles: ["admin"],
       },
-    ]
+    ];
 
-    return items.filter((item) => item.roles.includes(userRole))
-  }
+    return items.filter((item) => item.roles.includes(userRole));
+  };
 
-  const sidebarItems = getSidebarItems()
+  const sidebarItems = getSidebarItems();
 
   return (
     <SidebarProvider>
@@ -227,7 +302,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               <div className="rounded-md bg-corporate-600 p-1">
                 <Building2 className="h-6 w-6 text-white" />
               </div>
-              <div className="font-semibold text-corporate-800">GovernancePro</div>
+              <div className="font-semibold text-corporate-800">
+                GovernancePro
+              </div>
             </div>
           </SidebarHeader>
           <SidebarContent>
@@ -248,9 +325,15 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center justify-between">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center gap-2 p-2">
+                  <Button
+                    variant="ghost"
+                    className="flex items-center gap-2 p-2"
+                  >
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={userProfile.avatar || "/placeholder.svg"} alt={userProfile.name} />
+                      <AvatarImage
+                        src={userProfile.avatar || "/placeholder.svg"}
+                        alt={userProfile.name}
+                      />
                       <AvatarFallback className="bg-corporate-100 text-corporate-700">
                         {userProfile.initials}
                       </AvatarFallback>
@@ -270,7 +353,15 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                                   ? "Committee Member"
                                   : userRole === "legal"
                                     ? "Legal Consultant"
-                                    : userRole}
+                                    : userRole === "bod-candidate"
+                                      ? "BOD Candidate"
+                                      : userRole === "company-recruiter"
+                                        ? "Company Recruiter"
+                                        : userRole === "investment-analyst"
+                                          ? "Investment Analyst"
+                                          : userRole === "community-member"
+                                            ? "Community Member"
+                                            : userRole}
                       </span>
                     </div>
                     <ChevronDown className="ml-auto h-4 w-4" />
@@ -314,7 +405,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-4">
               {/* Role Switcher */}
               <div className="hidden md:flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Demo Role:</span>
+                <span className="text-sm text-muted-foreground">
+                  Demo Role:
+                </span>
                 <Select value={userRole} onValueChange={handleRoleChange}>
                   <SelectTrigger className="w-[180px] h-9 border-corporate-200">
                     <SelectValue />
@@ -329,6 +422,16 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                     <SelectItem value="ceo">CEO</SelectItem>
                     <SelectItem value="committee">Committee Member</SelectItem>
                     <SelectItem value="legal">Legal Consultant</SelectItem>
+                    <SelectItem value="bod-candidate">BOD Candidate</SelectItem>
+                    <SelectItem value="company-recruiter">
+                      Company Recruiter
+                    </SelectItem>
+                    <SelectItem value="investment-analyst">
+                      Investment Analyst
+                    </SelectItem>
+                    <SelectItem value="community-member">
+                      Community Member
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -347,19 +450,35 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   <DropdownMenuSeparator />
                   <div className="max-h-80 overflow-auto">
                     <DropdownMenuItem className="cursor-pointer flex flex-col items-start p-3">
-                      <div className="font-medium">New General Assembly Meeting</div>
-                      <div className="text-sm text-muted-foreground">Scheduled for June 1, 2025</div>
-                      <div className="text-xs text-muted-foreground mt-1">2 hours ago</div>
+                      <div className="font-medium">
+                        New General Assembly Meeting
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        Scheduled for June 1, 2025
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">
+                        2 hours ago
+                      </div>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer flex flex-col items-start p-3">
-                      <div className="font-medium">Quarterly Financial Report</div>
-                      <div className="text-sm text-muted-foreground">New document available for review</div>
-                      <div className="text-xs text-muted-foreground mt-1">Yesterday</div>
+                      <div className="font-medium">
+                        Quarterly Financial Report
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        New document available for review
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">
+                        Yesterday
+                      </div>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer flex flex-col items-start p-3">
                       <div className="font-medium">Voting Reminder</div>
-                      <div className="text-sm text-muted-foreground">Budget approval voting closes in 2 days</div>
-                      <div className="text-xs text-muted-foreground mt-1">2 days ago</div>
+                      <div className="text-sm text-muted-foreground">
+                        Budget approval voting closes in 2 days
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1">
+                        2 days ago
+                      </div>
                     </DropdownMenuItem>
                   </div>
                   <DropdownMenuSeparator />
@@ -381,5 +500,5 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         />
       )}
     </SidebarProvider>
-  )
+  );
 }

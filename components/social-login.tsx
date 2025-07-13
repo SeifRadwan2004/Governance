@@ -5,16 +5,11 @@ import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 import {
-  Building2,
-  Users,
+  Heart,
   UserCheck,
-  UserCog,
-  Briefcase,
-  User,
-  Shield,
-  GraduationCap,
-  UserPlus,
-  Scale,
+  Building,
+  TrendingUp,
+  Users,
   LogIn,
 } from "lucide-react";
 
@@ -37,65 +32,36 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function DemoNavigation() {
+export function SocialLogin() {
   const router = useRouter();
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [username, setUsername] = useState("");
 
   const roles = [
     {
-      id: "admin",
-      name: "Admin",
-      icon: Shield,
-      description: "Configure organization settings and voting rules",
-    },
-    {
-      id: "shareholder",
-      name: "Shareholder",
-      icon: User,
-      description: "View shareholding and delegate voting rights",
-    },
-    {
-      id: "assembly",
-      name: "General Assembly",
-      icon: Users,
-      description: "Participate in meetings and vote on resolutions",
-    },
-    {
-      id: "chairman",
-      name: "Chairman",
-      icon: UserCog,
-      description: "Create meetings, set agendas, and monitor voting",
-    },
-    {
-      id: "md",
-      name: "Managing Director",
-      icon: Briefcase,
-      description: "Oversee operations and strategic initiatives",
-    },
-    {
-      id: "bod",
-      name: "BOD Member",
+      id: "bod-candidate",
+      name: "BOD Candidate",
       icon: UserCheck,
-      description: "Track KPIs and monitor implementation",
+      description: "Apply for board positions and showcase qualifications",
     },
     {
-      id: "ceo",
-      name: "CEO",
-      icon: GraduationCap,
-      description: "Review and implement approved resolutions",
+      id: "company-recruiter",
+      name: "Company Recruiter",
+      icon: Building,
+      description: "Source and evaluate candidates for board positions",
     },
     {
-      id: "committee",
-      name: "Committee Member",
-      icon: UserPlus,
-      description: "Participate in specialized committee activities",
+      id: "investment-analyst",
+      name: "Investment Analyst",
+      icon: TrendingUp,
+      description: "Analyze governance practices and investment opportunities",
     },
     {
-      id: "legal",
-      name: "Legal Consultant",
-      icon: Scale,
-      description: "External consultant operations",
+      id: "community-member",
+      name: "Community Member",
+      icon: Users,
+      description:
+        "Participate in governance discussions and community initiatives",
     },
   ];
 
@@ -107,6 +73,7 @@ export function DemoNavigation() {
     try {
       localStorage.setItem("userRole", selectedRole);
       localStorage.setItem("username", username.trim());
+      localStorage.setItem("platform", "social");
     } catch (error) {
       console.error("Error setting localStorage:", error);
     }
@@ -116,38 +83,35 @@ export function DemoNavigation() {
   const selectedRoleData = roles.find((role) => role.id === selectedRole);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-corporate-50 via-white to-corporate-100 p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-purple-50 via-white to-pink-100 p-4">
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="mb-8 text-center">
           <div className="mb-4 flex justify-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-corporate-600 shadow-lg">
-              <Building2 className="h-10 w-10 text-white" />
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-pink-600 shadow-lg">
+              <Heart className="h-10 w-10 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-corporate-800">
-            GovernancePro
+          <h1 className="text-3xl font-bold text-purple-800">
+            Social Governance
           </h1>
-          <p className="mt-2 text-corporate-600">
-            Corporate Governance Platform
-          </p>
+          <p className="mt-2 text-purple-600">Community-Driven Platform</p>
         </div>
 
         {/* Login Card */}
-        <Card className="border-corporate-200 shadow-xl">
+        <Card className="border-purple-200 shadow-xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-corporate-800">
-              Sign In
-            </CardTitle>
+            <CardTitle className="text-2xl text-purple-800">Sign In</CardTitle>
             <CardDescription>
-              Enter your credentials and select your role to access the platform
+              Enter your credentials and select your role to access the social
+              governance platform
             </CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-6">
             {/* Username Input */}
             <div className="space-y-2">
-              <Label htmlFor="username" className="text-corporate-700">
+              <Label htmlFor="username" className="text-purple-700">
                 Username
               </Label>
               <Input
@@ -156,17 +120,17 @@ export function DemoNavigation() {
                 placeholder="Enter your username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="border-corporate-200 focus:border-corporate-500 focus:ring-corporate-500"
+                className="border-purple-200 focus:border-purple-500 focus:ring-purple-500"
               />
             </div>
 
             {/* Role Selection */}
             <div className="space-y-2">
-              <Label htmlFor="role" className="text-corporate-700">
+              <Label htmlFor="role" className="text-purple-700">
                 Select Your Role
               </Label>
               <Select value={selectedRole} onValueChange={setSelectedRole}>
-                <SelectTrigger className="border-corporate-200 focus:border-corporate-500 focus:ring-corporate-500">
+                <SelectTrigger className="border-purple-200 focus:border-purple-500 focus:ring-purple-500">
                   <SelectValue placeholder="Choose your role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -175,7 +139,7 @@ export function DemoNavigation() {
                     return (
                       <SelectItem key={role.id} value={role.id}>
                         <div className="flex items-center space-x-2">
-                          <IconComponent className="h-4 w-4 text-corporate-500" />
+                          <IconComponent className="h-4 w-4 text-purple-500" />
                           <span>{role.name}</span>
                         </div>
                       </SelectItem>
@@ -187,14 +151,14 @@ export function DemoNavigation() {
 
             {/* Role Description */}
             {selectedRoleData && (
-              <div className="rounded-lg bg-corporate-50 p-3 border border-corporate-200">
+              <div className="rounded-lg bg-purple-50 p-3 border border-purple-200">
                 <div className="flex items-center space-x-2 mb-1">
-                  <selectedRoleData.icon className="h-4 w-4 text-corporate-600" />
-                  <span className="font-medium text-corporate-800">
+                  <selectedRoleData.icon className="h-4 w-4 text-purple-600" />
+                  <span className="font-medium text-purple-800">
                     {selectedRoleData.name}
                   </span>
                 </div>
-                <p className="text-sm text-corporate-600">
+                <p className="text-sm text-purple-600">
                   {selectedRoleData.description}
                 </p>
               </div>
@@ -205,7 +169,7 @@ export function DemoNavigation() {
             <Button
               onClick={handleLogin}
               disabled={!selectedRole || !username.trim()}
-              className="w-full bg-corporate-600 hover:bg-corporate-700 text-white"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white"
             >
               <LogIn className="mr-2 h-4 w-4" />
               Sign In to Dashboard
@@ -215,8 +179,8 @@ export function DemoNavigation() {
 
         {/* Footer */}
         <div className="mt-8 text-center">
-          <p className="text-sm text-corporate-500">
-            © 2025 GovernancePro. All rights reserved.
+          <p className="text-sm text-purple-500">
+            © 2025 GovernancePro. Empowering social governance.
           </p>
         </div>
       </div>
