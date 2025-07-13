@@ -223,32 +223,3 @@ export function DemoNavigation() {
     </div>
   );
 }
-
-interface RoleCardProps {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  onClick: () => void;
-}
-
-function RoleCard({ title, description, icon, onClick }: RoleCardProps) {
-  return (
-    <Card
-      className="flex flex-col items-center text-center border-corporate-100 transition-all hover:border-corporate-300 hover:shadow-md cursor-pointer"
-      onClick={onClick}
-    >
-      <CardHeader>
-        <div className="mb-2 flex justify-center">{icon}</div>
-        <CardTitle className="text-xl text-corporate-700">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </CardContent>
-      <CardFooter>
-        <Button className="bg-corporate-600 hover:bg-corporate-700">
-          Enter Dashboard
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
