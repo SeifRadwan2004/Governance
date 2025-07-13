@@ -79,7 +79,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 export function InvestmentAnalystDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSector, setSelectedSector] = useState("");
+  const [selectedSector, setSelectedSector] = useState("all");
 
   // Mock data
   const analystProfile = {
