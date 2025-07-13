@@ -77,13 +77,12 @@ export default function DashboardPage() {
     case "company-recruiter":
       return <CompanyRecruiterDashboard />;
     case "investment-analyst":
+      return <InvestmentAnalystDashboard />;
     case "community-member":
       return (
         <div className="flex items-center justify-center h-[60vh] flex-col space-y-4">
           <div className="text-2xl font-bold text-purple-800">
-            {userRole === "investment-analyst" &&
-              "Investment Analyst Dashboard"}
-            {userRole === "community-member" && "Community Member Dashboard"}
+            Community Member Dashboard
           </div>
           <div className="text-purple-600">Coming Soon - Under Development</div>
         </div>
