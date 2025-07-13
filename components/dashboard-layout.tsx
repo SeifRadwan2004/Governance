@@ -353,7 +353,15 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                                   ? "Committee Member"
                                   : userRole === "legal"
                                     ? "Legal Consultant"
-                                    : userRole}
+                                    : userRole === "bod-candidate"
+                                      ? "BOD Candidate"
+                                      : userRole === "company-recruiter"
+                                        ? "Company Recruiter"
+                                        : userRole === "investment-analyst"
+                                          ? "Investment Analyst"
+                                          : userRole === "community-member"
+                                            ? "Community Member"
+                                            : userRole}
                       </span>
                     </div>
                     <ChevronDown className="ml-auto h-4 w-4" />
