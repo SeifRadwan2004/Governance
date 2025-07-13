@@ -422,6 +422,16 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                     <SelectItem value="ceo">CEO</SelectItem>
                     <SelectItem value="committee">Committee Member</SelectItem>
                     <SelectItem value="legal">Legal Consultant</SelectItem>
+                    <SelectItem value="bod-candidate">BOD Candidate</SelectItem>
+                    <SelectItem value="company-recruiter">
+                      Company Recruiter
+                    </SelectItem>
+                    <SelectItem value="investment-analyst">
+                      Investment Analyst
+                    </SelectItem>
+                    <SelectItem value="community-member">
+                      Community Member
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
