@@ -74,12 +74,12 @@ export default function DashboardPage() {
     case "bod-candidate":
       return <BODCandidateDashboard />;
     case "company-recruiter":
+      return <CompanyRecruiterDashboard />;
     case "investment-analyst":
     case "community-member":
       return (
         <div className="flex items-center justify-center h-[60vh] flex-col space-y-4">
           <div className="text-2xl font-bold text-purple-800">
-            {userRole === "company-recruiter" && "Company Recruiter Dashboard"}
             {userRole === "investment-analyst" &&
               "Investment Analyst Dashboard"}
             {userRole === "community-member" && "Community Member Dashboard"}
