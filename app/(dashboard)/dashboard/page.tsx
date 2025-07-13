@@ -69,15 +69,15 @@ export default function DashboardPage() {
       return <CommitteeDashboard />;
     case "legal":
       return <LegalDashboard />;
-    // Social platform roles - temporary placeholders
+    // Social platform roles
     case "bod-candidate":
+      return <BODCandidateDashboard />;
     case "company-recruiter":
     case "investment-analyst":
     case "community-member":
       return (
         <div className="flex items-center justify-center h-[60vh] flex-col space-y-4">
           <div className="text-2xl font-bold text-purple-800">
-            {userRole === "bod-candidate" && "BOD Candidate Dashboard"}
             {userRole === "company-recruiter" && "Company Recruiter Dashboard"}
             {userRole === "investment-analyst" &&
               "Investment Analyst Dashboard"}
