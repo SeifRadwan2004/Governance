@@ -16,6 +16,7 @@ import { ShareholderDashboard } from "@/components/shareholder-dashboard";
 import { BODCandidateDashboard } from "@/components/bod-candidate-dashboard";
 import { CompanyRecruiterDashboard } from "@/components/company-recruiter-dashboard";
 import { InvestmentAnalystDashboard } from "@/components/investment-analyst-dashboard";
+import { CommunityMemberDashboard } from "@/components/community-member-dashboard";
 
 export default function DashboardPage() {
   const [userRole, setUserRole] = useState<string | null>(null);
