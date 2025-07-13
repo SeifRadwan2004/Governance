@@ -305,7 +305,10 @@ export function InvestmentAnalystDashboard() {
     const matchesSearch =
       report.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       report.sector.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesSector = !selectedSector || report.sector === selectedSector;
+    const matchesSector =
+      !selectedSector ||
+      selectedSector === "all" ||
+      report.sector === selectedSector;
     return matchesSearch && matchesSector;
   });
 
