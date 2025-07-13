@@ -72,6 +72,15 @@ export default function DashboardPage() {
       return <CommitteeDashboard />;
     case "legal":
       return <LegalDashboard />;
+    // Social platform roles
+    case "bod-candidate":
+      return <BODCandidateDashboard />;
+    case "company-recruiter":
+      return <CompanyRecruiterDashboard />;
+    case "investment-analyst":
+      return <InvestmentAnalystDashboard />;
+    case "community-member":
+      return <CommunityMemberDashboard />;
     default:
       return <ShareholderDashboard />;
   }
