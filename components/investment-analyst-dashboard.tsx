@@ -622,7 +622,7 @@ export function InvestmentAnalystDashboard() {
                       <SelectValue placeholder="All Sectors" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Sectors</SelectItem>
+                      <SelectItem value="all">All Sectors</SelectItem>
                       <SelectItem value="Technology">Technology</SelectItem>
                       <SelectItem value="Healthcare">Healthcare</SelectItem>
                       <SelectItem value="Energy">Energy</SelectItem>
