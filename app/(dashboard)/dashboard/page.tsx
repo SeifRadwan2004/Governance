@@ -13,6 +13,7 @@ import { CommitteeDashboard } from "@/components/committee-dashboard";
 import { LegalDashboard } from "@/components/legal-dashboard";
 import { MDDashboard } from "@/components/md-dashboard";
 import { ShareholderDashboard } from "@/components/shareholder-dashboard";
+import { BODCandidateDashboard } from "@/components/bod-candidate-dashboard";
 
 export default function DashboardPage() {
   const [userRole, setUserRole] = useState<string | null>(null);
