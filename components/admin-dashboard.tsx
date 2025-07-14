@@ -442,7 +442,11 @@ export default function AdminDashboard() {
                           </span>
                         </div>
                         <div className="text-right">
-                          <Button variant="ghost" size="sm">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEditUser(user.email)}
+                          >
                             Edit
                           </Button>
                         </div>
