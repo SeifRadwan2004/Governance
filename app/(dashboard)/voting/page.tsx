@@ -189,13 +189,6 @@ export default function VotingPage() {
             Participate in governance decisions and view voting history
           </p>
         </div>
-        <Button
-          onClick={handleCreateVoting}
-          className="bg-corporate-600 hover:bg-corporate-700"
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Create New Voting
-        </Button>
       </div>
 
       {/* Stats Cards */}
