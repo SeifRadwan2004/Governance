@@ -855,7 +855,9 @@ export function CommunityMemberDashboard() {
                     </div>
                   ))}
                 </div>
-                <Button className="w-full">Manage Following List</Button>
+                <Button className="w-full" onClick={handleManageFollowing}>
+                  Manage Following List
+                </Button>
               </CardContent>
             </Card>
 
