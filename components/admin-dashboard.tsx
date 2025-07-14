@@ -392,7 +392,11 @@ export default function AdminDashboard() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button variant="outline" className="w-full">
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={handleViewAllUsers}
+              >
                 View All Users
               </Button>
             </CardFooter>
