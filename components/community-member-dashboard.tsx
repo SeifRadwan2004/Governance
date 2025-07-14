@@ -958,11 +958,19 @@ export function CommunityMemberDashboard() {
                           </div>
                         </div>
                         <div className="flex flex-col space-y-2 ml-4">
-                          <Button size="sm" variant="outline">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleReadArticle(headline.id)}
+                          >
                             <ExternalLink className="mr-1 h-3 w-3" />
                             Read Full Article
                           </Button>
-                          <Button size="sm" variant="ghost">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleSaveArticle(headline.id)}
+                          >
                             <Bookmark className="mr-1 h-3 w-3" />
                             Save
                           </Button>
