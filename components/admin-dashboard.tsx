@@ -521,6 +521,32 @@ export default function AdminDashboard() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Modal Components */}
+      <CompanyConfigForm
+        isOpen={isCompanyConfigOpen}
+        onClose={() => setIsCompanyConfigOpen(false)}
+        onSave={handleSaveCompanyConfig}
+      />
+
+      <AddUserForm
+        isOpen={isAddUserOpen}
+        onClose={() => setIsAddUserOpen(false)}
+        onSave={handleSaveUser}
+      />
+
+      <VotingCategoryForm
+        isOpen={isVotingCategoryOpen}
+        onClose={() => setIsVotingCategoryOpen(false)}
+        onSave={handleSaveVotingCategory}
+      />
+
+      <EditVotingRuleForm
+        isOpen={isEditVotingRuleOpen}
+        onClose={() => setIsEditVotingRuleOpen(false)}
+        onSave={handleSaveVotingRule}
+        ruleType={currentVotingRule}
+      />
     </div>
   );
 }
