@@ -330,14 +330,106 @@ export function CommunityMemberDashboard() {
     return matchesSearch && matchesSector && matchesType;
   });
 
+  // Initialize state with data
+  const [posts, setPosts] = useState(sectorFeed);
+  const [profile, setProfile] = useState(memberProfile);
+
   const handlePurchaseReport = (reportId: number) => {
-    // Handle report purchase logic
-    console.log("Purchasing report:", reportId);
+    const report = investmentReports.find((r) => r.id === reportId);
+    toast({
+      title: "Purchase Initiated",
+      description: `Starting purchase process for "${report?.title}"`,
+    });
+    // In a real app, this would integrate with payment processing
   };
 
   const handlePreviewReport = (reportId: number) => {
-    // Handle report preview logic
-    console.log("Previewing report:", reportId);
+    const report = investmentReports.find((r) => r.id === reportId);
+    toast({
+      title: "Opening Preview",
+      description: `Opening preview for "${report?.title}"`,
+    });
+    // In a real app, this would open a preview modal or new tab
+  };
+
+  const handleEditProfile = () => {
+    setIsProfileEditOpen(true);
+  };
+
+  const handleSaveProfile = (updatedProfile: any) => {
+    setProfile({ ...profile, ...updatedProfile });
+    toast({
+      title: "Profile Updated",
+      description: "Your profile has been successfully updated.",
+    });
+  };
+
+  const handleCreatePost = () => {
+    setIsCreatePostOpen(true);
+  };
+
+  const handleSubmitPost = (postData: any) => {
+    const newPost = {
+      id: posts.length + 1,
+      type: postData.type,
+      author: profile.name,
+      authorTitle: profile.title,
+      avatar: profile.avatar,
+      sector: postData.sector,
+      timestamp: "just now",
+      title: postData.title,
+      content: postData.content,
+      likes: 0,
+      comments: 0,
+      shares: 0,
+      hasLiked: false,
+      hasCommented: false,
+      hasShared: false,
+      tags: postData.tags,
+      isPinned: false,
+      isFollowing: false,
+    };
+    setPosts([newPost, ...posts]);
+    toast({
+      title: "Post Created",
+      description: "Your post has been published successfully.",
+    });
+  };
+
+  const handleManageFollowing = () => {
+    toast({
+      title: "Following Management",
+      description: "Opening following management panel...",
+    });
+  };
+
+  const handleFindToFollow = () => {
+    setActiveTab("discover");
+  };
+
+  const handleViewAnnouncements = () => {
+    setActiveTab("headlines");
+  };
+
+  const handleViewActivity = () => {
+    setActiveTab("activity");
+  };
+
+  const handleReadArticle = (headlineId: number) => {
+    const headline = globalHeadlines.find((h) => h.id === headlineId);
+    toast({
+      title: "Opening Article",
+      description: `Opening "${headline?.title}" in new tab`,
+    });
+    // In a real app, this would open the article URL
+  };
+
+  const handleSaveArticle = (headlineId: number) => {
+    const headline = globalHeadlines.find((h) => h.id === headlineId);
+    toast({
+      title: "Article Saved",
+      description: `"${headline?.title}" saved to your reading list`,
+    });
   };
 
   const handleFollow = (itemId: number) => {
