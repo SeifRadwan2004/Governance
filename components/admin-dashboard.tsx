@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Shield, Settings, Users, Vote } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -13,10 +14,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CompanyConfigForm } from "@/components/admin/company-config-form";
+import { AddUserForm } from "@/components/admin/add-user-form";
+import { VotingCategoryForm } from "@/components/admin/voting-category-form";
+import { EditVotingRuleForm } from "@/components/admin/edit-voting-rule-form";
 
 // Change to default export
 export default function AdminDashboard() {
   const { toast } = useToast();
+
+  // Modal states
+  const [isCompanyConfigOpen, setIsCompanyConfigOpen] = useState(false);
+  const [isAddUserOpen, setIsAddUserOpen] = useState(false);
+  const [isVotingCategoryOpen, setIsVotingCategoryOpen] = useState(false);
+  const [isEditVotingRuleOpen, setIsEditVotingRuleOpen] = useState(false);
+  const [currentVotingRule, setCurrentVotingRule] = useState("");
 
   const handleConfigure = (section: string) => {
     toast({
