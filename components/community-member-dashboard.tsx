@@ -441,8 +441,34 @@ export function CommunityMemberDashboard() {
     postId: number,
     reactionType: "like" | "comment" | "share",
   ) => {
-    // Handle reaction logic
-    console.log("Reaction:", reactionType, "on post:", postId);
+    const updatedPosts = posts.map((post) => {
+      if (post.id === postId) {
+        switch (reactionType) {
+          case "like":
+            return {
+              ...post,
+              hasLiked: !post.hasLiked,
+              likes: post.hasLiked ? post.likes - 1 : post.likes + 1,
+            };
+          case "comment":
+            toast({
+              title: "Comment Feature",
+              description: "Opening comment dialog...",
+            });
+            return post;
+          case "share":
+            return {
+              ...post,
+              hasShared: !post.hasShared,
+              shares: post.hasShared ? post.shares - 1 : post.shares + 1,
+            };
+          default:
+            return post;
+        }
+      }
+      return post;
+    });
+    setPosts(updatedPosts);
   };
 
   return (
