@@ -1291,6 +1291,20 @@ export function CommunityMemberDashboard() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Modals */}
+      <ProfileEditForm
+        isOpen={isProfileEditOpen}
+        onClose={() => setIsProfileEditOpen(false)}
+        profile={profile}
+        onSave={handleSaveProfile}
+      />
+
+      <CreatePostModal
+        isOpen={isCreatePostOpen}
+        onClose={() => setIsCreatePostOpen(false)}
+        onSubmit={handleSubmitPost}
+      />
     </div>
   );
 }
