@@ -295,7 +295,10 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="rounded-lg border border-dashed border-corporate-200 p-4 flex items-center justify-center">
-                  <Button className="bg-corporate-600 hover:bg-corporate-700">
+                  <Button
+                    className="bg-corporate-600 hover:bg-corporate-700"
+                    onClick={handleAddVotingCategory}
+                  >
                     Add New Voting Category
                   </Button>
                 </div>
