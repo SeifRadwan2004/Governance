@@ -313,7 +313,11 @@ export default function AdminDashboard() {
                     <h3 className="font-semibold text-corporate-800">
                       Board Resolution
                     </h3>
-                    <Button size="sm" variant="outline">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleEditVotingRule("Board Resolution")}
+                    >
                       Edit
                     </Button>
                   </div>
