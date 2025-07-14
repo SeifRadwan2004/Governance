@@ -467,13 +467,28 @@ export function CommunityMemberDashboard() {
         onValueChange={setActiveTab}
         className="space-y-6"
       >
-        <TabsList className="grid w-full grid-cols-6">
-          <TabsTrigger value="feed">Feed</TabsTrigger>
-          <TabsTrigger value="following">Following</TabsTrigger>
-          <TabsTrigger value="headlines">Global Headlines</TabsTrigger>
-          <TabsTrigger value="reports">Investment Reports</TabsTrigger>
-          <TabsTrigger value="activity">My Activity</TabsTrigger>
-          <TabsTrigger value="discover">Discover</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 gap-1">
+          <TabsTrigger value="feed" className="text-xs md:text-sm">
+            Feed
+          </TabsTrigger>
+          <TabsTrigger value="following" className="text-xs md:text-sm">
+            Following
+          </TabsTrigger>
+          <TabsTrigger value="headlines" className="text-xs md:text-sm">
+            <span className="hidden md:inline">Global Headlines</span>
+            <span className="md:hidden">Headlines</span>
+          </TabsTrigger>
+          <TabsTrigger value="reports" className="text-xs md:text-sm">
+            <span className="hidden md:inline">Investment Reports</span>
+            <span className="md:hidden">Reports</span>
+          </TabsTrigger>
+          <TabsTrigger value="activity" className="text-xs md:text-sm">
+            <span className="hidden md:inline">My Activity</span>
+            <span className="md:hidden">Activity</span>
+          </TabsTrigger>
+          <TabsTrigger value="discover" className="text-xs md:text-sm">
+            Discover
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="feed" className="space-y-6">
