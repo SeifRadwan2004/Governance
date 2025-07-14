@@ -540,19 +540,35 @@ export function CommunityMemberDashboard() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                  onClick={handleCreatePost}
+                >
                   <Plus className="h-5 w-5 mb-2" />
                   Create Post
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                  onClick={handleFindToFollow}
+                >
                   <UserPlus className="h-5 w-5 mb-2" />
                   Find to Follow
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                  onClick={handleViewAnnouncements}
+                >
                   <Bell className="h-5 w-5 mb-2" />
                   Announcements
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                  onClick={handleViewActivity}
+                >
                   <Activity className="h-5 w-5 mb-2" />
                   My Activity
                 </Button>
