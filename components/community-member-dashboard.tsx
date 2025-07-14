@@ -72,12 +72,20 @@ import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Textarea } from "@/components/ui/textarea";
+import { ProfileEditForm } from "@/components/profile-edit-form";
+import { CreatePostModal } from "@/components/create-post-modal";
+import { useToast } from "@/hooks/use-toast";
 
 export function CommunityMemberDashboard() {
   const [activeTab, setActiveTab] = useState("feed");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSector, setSelectedSector] = useState("all");
   const [postType, setPostType] = useState("all");
+  const [isProfileEditOpen, setIsProfileEditOpen] = useState(false);
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+  const [posts, setPosts] = useState(sectorFeed);
+  const [profile, setProfile] = useState(memberProfile);
+  const { toast } = useToast();
 
   // Mock data
   const memberProfile = {
