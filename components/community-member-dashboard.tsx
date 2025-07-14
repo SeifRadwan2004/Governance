@@ -433,8 +433,12 @@ export function CommunityMemberDashboard() {
   };
 
   const handleFollow = (itemId: number) => {
-    // Handle follow logic
-    console.log("Following item:", itemId);
+    const suggestion = followingSuggestions.find((s) => s.id === itemId);
+    toast({
+      title: "Following",
+      description: `You are now following ${suggestion?.name}`,
+    });
+    // In a real app, this would update the following list
   };
 
   const handleReaction = (
