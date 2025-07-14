@@ -467,27 +467,47 @@ export function CommunityMemberDashboard() {
         onValueChange={setActiveTab}
         className="space-y-6"
       >
-        <TabsList className="grid w-full grid-cols-3 md:grid-cols-6 gap-1">
-          <TabsTrigger value="feed" className="text-xs md:text-sm">
+        <TabsList className="grid w-full grid-cols-3 xl:grid-cols-6 gap-0.5">
+          <TabsTrigger
+            value="feed"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
             Feed
           </TabsTrigger>
-          <TabsTrigger value="following" className="text-xs md:text-sm">
-            Following
+          <TabsTrigger
+            value="following"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">Following</span>
+            <span className="xl:hidden">Follow</span>
           </TabsTrigger>
-          <TabsTrigger value="headlines" className="text-xs md:text-sm">
-            <span className="hidden md:inline">Global Headlines</span>
-            <span className="md:hidden">Headlines</span>
+          <TabsTrigger
+            value="headlines"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">Global Headlines</span>
+            <span className="xl:hidden">News</span>
           </TabsTrigger>
-          <TabsTrigger value="reports" className="text-xs md:text-sm">
-            <span className="hidden md:inline">Investment Reports</span>
-            <span className="md:hidden">Reports</span>
+          <TabsTrigger
+            value="reports"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">Investment Reports</span>
+            <span className="xl:hidden">Reports</span>
           </TabsTrigger>
-          <TabsTrigger value="activity" className="text-xs md:text-sm">
-            <span className="hidden md:inline">My Activity</span>
-            <span className="md:hidden">Activity</span>
+          <TabsTrigger
+            value="activity"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">My Activity</span>
+            <span className="xl:hidden">Activity</span>
           </TabsTrigger>
-          <TabsTrigger value="discover" className="text-xs md:text-sm">
-            Discover
+          <TabsTrigger
+            value="discover"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">Discover</span>
+            <span className="xl:hidden">More</span>
           </TabsTrigger>
         </TabsList>
 
