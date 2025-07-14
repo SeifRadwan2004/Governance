@@ -316,7 +316,10 @@ export default function AdminDashboard() {
             <CardContent>
               <div className="space-y-4">
                 <div className="flex justify-end">
-                  <Button className="bg-corporate-600 hover:bg-corporate-700">
+                  <Button
+                    className="bg-corporate-600 hover:bg-corporate-700"
+                    onClick={handleAddUser}
+                  >
                     Add New User
                   </Button>
                 </div>
