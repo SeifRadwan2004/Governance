@@ -31,31 +31,27 @@ export default function AdminDashboard() {
   const [currentVotingRule, setCurrentVotingRule] = useState("");
 
   const handleConfigure = (section: string) => {
-    toast({
-      title: "Configuration",
-      description: `Opening ${section} configuration panel...`,
-    });
+    if (section === "Company Information") {
+      setIsCompanyConfigOpen(true);
+    } else {
+      toast({
+        title: "Configuration",
+        description: `Opening ${section} configuration panel...`,
+      });
+    }
   };
 
   const handleEditVotingRule = (ruleType: string) => {
-    toast({
-      title: "Edit Voting Rule",
-      description: `Opening editor for ${ruleType} rules...`,
-    });
+    setCurrentVotingRule(ruleType);
+    setIsEditVotingRuleOpen(true);
   };
 
   const handleAddVotingCategory = () => {
-    toast({
-      title: "Add Voting Category",
-      description: "Opening new voting category form...",
-    });
+    setIsVotingCategoryOpen(true);
   };
 
   const handleAddUser = () => {
-    toast({
-      title: "Add New User",
-      description: "Opening user creation form...",
-    });
+    setIsAddUserOpen(true);
   };
 
   const handleEditUser = (userId: string) => {
@@ -77,6 +73,39 @@ export default function AdminDashboard() {
       title: "System Logs",
       description: "Opening system logs viewer...",
     });
+  };
+
+  // Form submission handlers
+  const handleSaveCompanyConfig = (data: any) => {
+    toast({
+      title: "Configuration Saved",
+      description: "Company information has been updated successfully.",
+    });
+    console.log("Company config saved:", data);
+  };
+
+  const handleSaveUser = (data: any) => {
+    toast({
+      title: "User Created",
+      description: `User ${data.firstName} ${data.lastName} has been created successfully.`,
+    });
+    console.log("User created:", data);
+  };
+
+  const handleSaveVotingCategory = (data: any) => {
+    toast({
+      title: "Voting Category Created",
+      description: `"${data.name}" voting category has been created successfully.`,
+    });
+    console.log("Voting category created:", data);
+  };
+
+  const handleSaveVotingRule = (data: any) => {
+    toast({
+      title: "Voting Rule Updated",
+      description: `"${data.name}" has been updated successfully.`,
+    });
+    console.log("Voting rule updated:", data);
   };
   return (
     <div className="flex flex-col gap-4">
