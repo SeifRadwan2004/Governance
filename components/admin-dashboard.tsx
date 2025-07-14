@@ -217,22 +217,6 @@ export default function AdminDashboard() {
 
                 <div className="rounded-lg border border-corporate-100 p-4">
                   <h3 className="font-semibold text-corporate-800">
-                    Organizational Structure
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Define departments, committees, and reporting hierarchies.
-                  </p>
-                  <Button
-                    size="sm"
-                    className="mt-2 bg-corporate-600 hover:bg-corporate-700"
-                    onClick={() => handleConfigure("Organizational Structure")}
-                  >
-                    Configure
-                  </Button>
-                </div>
-
-                <div className="rounded-lg border border-corporate-100 p-4">
-                  <h3 className="font-semibold text-corporate-800">
                     Governance Framework
                   </h3>
                   <p className="text-sm text-muted-foreground mt-1">
