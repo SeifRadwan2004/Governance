@@ -168,6 +168,7 @@ export default function AdminDashboard() {
                   <Button
                     size="sm"
                     className="mt-2 bg-corporate-600 hover:bg-corporate-700"
+                    onClick={() => handleConfigure("Company Information")}
                   >
                     Configure
                   </Button>
