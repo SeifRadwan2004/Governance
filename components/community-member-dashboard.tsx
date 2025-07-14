@@ -501,7 +501,10 @@ export function CommunityMemberDashboard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full bg-purple-600 hover:bg-purple-700">
+            <Button
+              className="w-full bg-purple-600 hover:bg-purple-700"
+              onClick={handleEditProfile}
+            >
               <Settings className="mr-2 h-4 w-4" />
               Edit Profile
             </Button>
