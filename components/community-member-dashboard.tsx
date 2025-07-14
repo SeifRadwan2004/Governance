@@ -83,8 +83,6 @@ export function CommunityMemberDashboard() {
   const [postType, setPostType] = useState("all");
   const [isProfileEditOpen, setIsProfileEditOpen] = useState(false);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
-  const [posts, setPosts] = useState(sectorFeed);
-  const [profile, setProfile] = useState(memberProfile);
   const { toast } = useToast();
 
   // Mock data
