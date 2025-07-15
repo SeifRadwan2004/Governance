@@ -159,7 +159,10 @@ export function ShareholderDashboard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full bg-corporate-600 hover:bg-corporate-700">
+            <Button
+              onClick={handleCastVote}
+              className="w-full bg-corporate-600 hover:bg-corporate-700"
+            >
               Cast Your Vote
             </Button>
           </CardFooter>
