@@ -58,8 +58,7 @@ export default function DashboardPage() {
       return <AdminDashboard />;
     case "shareholder":
       return <ShareholderDashboard />;
-    case "assembly":
-      return <AssemblyDashboard />;
+
     case "chairman":
       return <ChairmanDashboard />;
     case "md":
