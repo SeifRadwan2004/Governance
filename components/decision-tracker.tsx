@@ -433,7 +433,9 @@ export function DecisionTracker() {
                         <DropdownMenuItem>View Details</DropdownMenuItem>
                         {decision.status === "Pending" && (
                           <>
-                            <DropdownMenuItem>Cast Vote</DropdownMenuItem>
+                            <DropdownMenuItem onClick={handleCastVote}>
+                              Cast Vote
+                            </DropdownMenuItem>
                             <DropdownMenuItem>Edit Proposal</DropdownMenuItem>
                           </>
                         )}
