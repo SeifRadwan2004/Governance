@@ -493,7 +493,9 @@ export function DecisionTracker() {
                     <Button variant="outline" size="sm">
                       View Details
                     </Button>
-                    <Button size="sm">Cast Vote</Button>
+                    <Button onClick={handleCastVote} size="sm">
+                      Cast Vote
+                    </Button>
                   </CardFooter>
                 </Card>
               ))}
