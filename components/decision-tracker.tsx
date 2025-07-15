@@ -1,12 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { CheckCircle, Clock, MoreHorizontal, Plus, Search, XCircle } from "lucide-react"
+import { useState } from "react";
+import {
+  CheckCircle,
+  Clock,
+  MoreHorizontal,
+  Plus,
+  Search,
+  XCircle,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -15,20 +30,26 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Progress } from "@/components/ui/progress"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 
 const decisions = [
   {
@@ -84,7 +105,8 @@ const decisions = [
   {
     id: 3,
     title: "Strategic Plan Revision",
-    description: "Revision of the 5-year strategic plan to include digital transformation initiatives",
+    description:
+      "Revision of the 5-year strategic plan to include digital transformation initiatives",
     category: "Strategy",
     status: "Pending",
     dateSubmitted: "May 20, 2025",
@@ -109,7 +131,8 @@ const decisions = [
   {
     id: 4,
     title: "Executive Compensation Package",
-    description: "Approval of the revised executive compensation package for the CEO and CFO",
+    description:
+      "Approval of the revised executive compensation package for the CEO and CFO",
     category: "Compensation",
     status: "Pending",
     dateSubmitted: "May 18, 2025",
@@ -134,7 +157,8 @@ const decisions = [
   {
     id: 5,
     title: "Sustainability Initiative",
-    description: "Approval of the new sustainability initiative to reduce carbon footprint by 30% by 2030",
+    description:
+      "Approval of the new sustainability initiative to reduce carbon footprint by 30% by 2030",
     category: "Strategy",
     status: "Approved",
     dateSubmitted: "April 10, 2025",
@@ -206,30 +230,34 @@ const decisions = [
       assignedTo: "",
     },
   },
-]
+];
 
 export function DecisionTracker() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("all")
-  const [selectedStatus, setSelectedStatus] = useState("all")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedStatus, setSelectedStatus] = useState("all");
 
   const filteredDecisions = decisions.filter((decision) => {
     const matchesSearch =
       decision.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      decision.description.toLowerCase().includes(searchTerm.toLowerCase())
+      decision.description.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesCategory = selectedCategory === "all" || decision.category === selectedCategory
-    const matchesStatus = selectedStatus === "all" || decision.status === selectedStatus
+    const matchesCategory =
+      selectedCategory === "all" || decision.category === selectedCategory;
+    const matchesStatus =
+      selectedStatus === "all" || decision.status === selectedStatus;
 
-    return matchesSearch && matchesCategory && matchesStatus
-  })
+    return matchesSearch && matchesCategory && matchesStatus;
+  });
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Decisions</h2>
-          <p className="text-muted-foreground">Track and manage board decisions and their implementation</p>
+          <p className="text-muted-foreground">
+            Track and manage board decisions and their implementation
+          </p>
         </div>
         <Dialog>
           <DialogTrigger asChild>
@@ -241,7 +269,9 @@ export function DecisionTracker() {
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle>Submit New Proposal</DialogTitle>
-              <DialogDescription>Create a new proposal for board consideration</DialogDescription>
+              <DialogDescription>
+                Create a new proposal for board consideration
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
@@ -250,7 +280,10 @@ export function DecisionTracker() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="description">Description</Label>
-                <Textarea id="description" placeholder="Enter proposal description" />
+                <Textarea
+                  id="description"
+                  placeholder="Enter proposal description"
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="category">Category</Label>
@@ -332,10 +365,15 @@ export function DecisionTracker() {
             </div>
             <div className="divide-y">
               {filteredDecisions.map((decision) => (
-                <div key={decision.id} className="grid grid-cols-7 items-center px-4 py-3">
+                <div
+                  key={decision.id}
+                  className="grid grid-cols-7 items-center px-4 py-3"
+                >
                   <div className="col-span-2">
                     <div className="font-medium">{decision.title}</div>
-                    <div className="text-xs text-muted-foreground sm:hidden">{decision.category}</div>
+                    <div className="text-xs text-muted-foreground sm:hidden">
+                      {decision.category}
+                    </div>
                   </div>
                   <div className="hidden sm:block">
                     <Badge variant="outline">{decision.category}</Badge>
@@ -355,7 +393,9 @@ export function DecisionTracker() {
                   </div>
                   <div className="hidden lg:block text-sm">
                     <div>{decision.dateSubmitted}</div>
-                    <div className="text-xs text-muted-foreground">by {decision.submittedBy.name}</div>
+                    <div className="text-xs text-muted-foreground">
+                      by {decision.submittedBy.name}
+                    </div>
                   </div>
                   <div className="hidden lg:block">
                     {decision.implementation.status !== "Not Started" && (
@@ -364,11 +404,16 @@ export function DecisionTracker() {
                           <span>{decision.implementation.status}</span>
                           <span>{decision.implementation.progress}%</span>
                         </div>
-                        <Progress value={decision.implementation.progress} className="h-2" />
+                        <Progress
+                          value={decision.implementation.progress}
+                          className="h-2"
+                        />
                       </div>
                     )}
                     {decision.implementation.status === "Not Started" && (
-                      <span className="text-xs text-muted-foreground">Not started</span>
+                      <span className="text-xs text-muted-foreground">
+                        Not started
+                      </span>
                     )}
                   </div>
                   <div className="text-right">
@@ -387,9 +432,12 @@ export function DecisionTracker() {
                             <DropdownMenuItem>Edit Proposal</DropdownMenuItem>
                           </>
                         )}
-                        {decision.status === "Approved" && decision.implementation.status !== "Completed" && (
-                          <DropdownMenuItem>Update Implementation</DropdownMenuItem>
-                        )}
+                        {decision.status === "Approved" &&
+                          decision.implementation.status !== "Completed" && (
+                            <DropdownMenuItem>
+                              Update Implementation
+                            </DropdownMenuItem>
+                          )}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Download Details</DropdownMenuItem>
                       </DropdownMenuContent>
@@ -415,14 +463,22 @@ export function DecisionTracker() {
                     <div className="mt-4 flex items-center">
                       <Avatar className="h-8 w-8">
                         <AvatarImage
-                          src={decision.submittedBy.avatar || "/placeholder.svg"}
+                          src={
+                            decision.submittedBy.avatar || "/placeholder.svg"
+                          }
                           alt={decision.submittedBy.name}
                         />
-                        <AvatarFallback>{decision.submittedBy.initials}</AvatarFallback>
+                        <AvatarFallback>
+                          {decision.submittedBy.initials}
+                        </AvatarFallback>
                       </Avatar>
                       <div className="ml-2">
-                        <p className="text-sm font-medium">{decision.submittedBy.name}</p>
-                        <p className="text-xs text-muted-foreground">{decision.dateSubmitted}</p>
+                        <p className="text-sm font-medium">
+                          {decision.submittedBy.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {decision.dateSubmitted}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -471,7 +527,9 @@ export function DecisionTracker() {
                           <span>{decision.votes.abstain}</span>
                         </div>
                       </div>
-                      <div className="text-xs text-muted-foreground">Decision Date: {decision.dateDecided}</div>
+                      <div className="text-xs text-muted-foreground">
+                        Decision Date: {decision.dateDecided}
+                      </div>
                     </div>
                   </CardContent>
                   <CardFooter>
@@ -496,11 +554,15 @@ export function DecisionTracker() {
               {filteredDecisions
                 .filter((decision) => decision.status === "Approved")
                 .map((decision) => (
-                  <div key={decision.id} className="grid grid-cols-6 items-center px-4 py-3">
+                  <div
+                    key={decision.id}
+                    className="grid grid-cols-6 items-center px-4 py-3"
+                  >
                     <div className="col-span-2">
                       <div className="font-medium">{decision.title}</div>
                       <div className="text-xs text-muted-foreground">
-                        Assigned to: {decision.implementation.assignedTo || "Unassigned"}
+                        Assigned to:{" "}
+                        {decision.implementation.assignedTo || "Unassigned"}
                       </div>
                     </div>
                     <div className="hidden sm:block">
@@ -521,10 +583,15 @@ export function DecisionTracker() {
                         <div className="text-xs flex justify-between">
                           <span>{decision.implementation.progress}%</span>
                         </div>
-                        <Progress value={decision.implementation.progress} className="h-2" />
+                        <Progress
+                          value={decision.implementation.progress}
+                          className="h-2"
+                        />
                       </div>
                     </div>
-                    <div className="hidden lg:block text-sm">{decision.implementation.dueDate || "Not set"}</div>
+                    <div className="hidden lg:block text-sm">
+                      {decision.implementation.dueDate || "Not set"}
+                    </div>
                     <div className="text-right">
                       <Button variant="outline" size="sm">
                         Update
@@ -537,5 +604,5 @@ export function DecisionTracker() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
