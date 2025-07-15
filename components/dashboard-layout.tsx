@@ -341,27 +341,25 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                     <div className="flex flex-col items-start text-sm">
                       <span className="font-medium">{userProfile.name}</span>
                       <span className="text-xs text-muted-foreground capitalize">
-                        {userRole === "assembly"
-                          ? "General Assembly"
-                          : userRole === "bod"
-                            ? "BOD Member"
-                            : userRole === "md"
-                              ? "Managing Director"
-                              : userRole === "ceo"
-                                ? "CEO"
-                                : userRole === "committee"
-                                  ? "Committee Member"
-                                  : userRole === "legal"
-                                    ? "Legal Consultant"
-                                    : userRole === "bod-candidate"
-                                      ? "BOD Candidate"
-                                      : userRole === "company-recruiter"
-                                        ? "Company Recruiter"
-                                        : userRole === "investment-analyst"
-                                          ? "Investment Analyst"
-                                          : userRole === "community-member"
-                                            ? "Community Member"
-                                            : userRole}
+                        {userRole === "bod"
+                          ? "BOD Member"
+                          : userRole === "md"
+                            ? "Managing Director"
+                            : userRole === "ceo"
+                              ? "CEO"
+                              : userRole === "committee"
+                                ? "Committee Member"
+                                : userRole === "legal"
+                                  ? "Legal Consultant"
+                                  : userRole === "bod-candidate"
+                                    ? "BOD Candidate"
+                                    : userRole === "company-recruiter"
+                                      ? "Company Recruiter"
+                                      : userRole === "investment-analyst"
+                                        ? "Investment Analyst"
+                                        : userRole === "community-member"
+                                          ? "Community Member"
+                                          : userRole}
                       </span>
                     </div>
                     <ChevronDown className="ml-auto h-4 w-4" />
@@ -415,7 +413,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   <SelectContent>
                     <SelectItem value="admin">Admin</SelectItem>
                     <SelectItem value="shareholder">Shareholder</SelectItem>
-                    <SelectItem value="assembly">General Assembly</SelectItem>
+
                     <SelectItem value="chairman">Chairman</SelectItem>
                     <SelectItem value="md">Managing Director</SelectItem>
                     <SelectItem value="bod">Board Member</SelectItem>
@@ -451,17 +449,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   <div className="max-h-80 overflow-auto">
                     <DropdownMenuItem className="cursor-pointer flex flex-col items-start p-3">
                       <div className="font-medium">
-                        New General Assembly Meeting
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        Scheduled for June 1, 2025
-                      </div>
-                      <div className="text-xs text-muted-foreground mt-1">
-                        2 hours ago
-                      </div>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer flex flex-col items-start p-3">
-                      <div className="font-medium">
                         Quarterly Financial Report
                       </div>
                       <div className="text-sm text-muted-foreground">
@@ -494,8 +481,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       </div>
       {showNotification && (
         <Notification
-          title="New General Assembly Meeting"
-          description="Scheduled for June 1, 2025"
+          title="Quarterly Report Available"
+          description="New financial report ready for review"
           onClose={() => setShowNotification(false)}
         />
       )}
