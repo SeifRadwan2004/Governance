@@ -233,7 +233,12 @@ const decisions = [
 ];
 
 export function DecisionTracker() {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleCastVote = () => {
+    router.push("/voting");
+  };
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
 
