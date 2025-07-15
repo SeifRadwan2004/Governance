@@ -1,11 +1,17 @@
-"use client"
+"use client";
 
-import { Calendar, CheckCircle, FileText, Users } from "lucide-react"
+import { Calendar, CheckCircle, FileText, Users } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function CommitteeDashboard() {
   return (
@@ -13,7 +19,9 @@ export function CommitteeDashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card className="border-corporate-100">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Committee Meetings</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Committee Meetings
+            </CardTitle>
             <Calendar className="h-4 w-4 text-corporate-500" />
           </CardHeader>
           <CardContent>
@@ -43,7 +51,9 @@ export function CommitteeDashboard() {
         </Card>
         <Card className="border-corporate-100">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Committee Members</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Committee Members
+            </CardTitle>
             <Users className="h-4 w-4 text-corporate-500" />
           </CardHeader>
           <CardContent>
@@ -55,13 +65,22 @@ export function CommitteeDashboard() {
 
       <Tabs defaultValue="meetings" className="w-full">
         <TabsList className="mb-4 bg-corporate-50">
-          <TabsTrigger value="meetings" className="data-[state=active]:bg-corporate-600 data-[state=active]:text-white">
+          <TabsTrigger
+            value="meetings"
+            className="data-[state=active]:bg-corporate-600 data-[state=active]:text-white"
+          >
             Meetings
           </TabsTrigger>
-          <TabsTrigger value="tasks" className="data-[state=active]:bg-corporate-600 data-[state=active]:text-white">
+          <TabsTrigger
+            value="tasks"
+            className="data-[state=active]:bg-corporate-600 data-[state=active]:text-white"
+          >
             Tasks
           </TabsTrigger>
-          <TabsTrigger value="reports" className="data-[state=active]:bg-corporate-600 data-[state=active]:text-white">
+          <TabsTrigger
+            value="reports"
+            className="data-[state=active]:bg-corporate-600 data-[state=active]:text-white"
+          >
             Reports
           </TabsTrigger>
         </TabsList>
@@ -70,14 +89,12 @@ export function CommitteeDashboard() {
           <Card className="border-corporate-100">
             <CardHeader>
               <CardTitle>Committee Meetings</CardTitle>
-              <CardDescription>Schedule and manage committee meetings</CardDescription>
+              <CardDescription>
+                Schedule and manage committee meetings
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex justify-end">
-                  <Button className="bg-corporate-600 hover:bg-corporate-700">Schedule Meeting</Button>
-                </div>
-
                 <div className="rounded-md border">
                   <div className="grid grid-cols-4 border-b px-4 py-3 font-medium">
                     <div className="col-span-2">Meeting</div>
@@ -105,14 +122,21 @@ export function CommitteeDashboard() {
                         time: "9:00 AM - 11:00 AM",
                       },
                     ].map((meeting, index) => (
-                      <div key={index} className="grid grid-cols-4 items-center px-4 py-3">
+                      <div
+                        key={index}
+                        className="grid grid-cols-4 items-center px-4 py-3"
+                      >
                         <div className="col-span-2">
                           <div className="font-medium">{meeting.title}</div>
-                          <div className="text-xs text-muted-foreground">{meeting.description}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {meeting.description}
+                          </div>
                         </div>
                         <div>
                           <div className="text-sm">{meeting.date}</div>
-                          <div className="text-xs text-muted-foreground">{meeting.time}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {meeting.time}
+                          </div>
                         </div>
                         <div className="text-right">
                           <Button variant="ghost" size="sm">
@@ -132,19 +156,24 @@ export function CommitteeDashboard() {
           <Card className="border-corporate-100">
             <CardHeader>
               <CardTitle>Committee Tasks</CardTitle>
-              <CardDescription>Track and manage committee tasks</CardDescription>
+              <CardDescription>
+                Track and manage committee tasks
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="rounded-lg border border-corporate-100 p-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-corporate-800">Prepare Quarterly Audit Report</h3>
+                    <h3 className="font-semibold text-corporate-800">
+                      Prepare Quarterly Audit Report
+                    </h3>
                     <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
                       In Progress
                     </span>
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Review financial statements and prepare audit report for board review.
+                    Review financial statements and prepare audit report for
+                    board review.
                   </p>
                   <div className="mt-2">
                     <div className="flex items-center justify-between text-xs">
@@ -160,13 +189,16 @@ export function CommitteeDashboard() {
 
                 <div className="rounded-lg border border-corporate-100 p-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-corporate-800">Board Composition Analysis</h3>
+                    <h3 className="font-semibold text-corporate-800">
+                      Board Composition Analysis
+                    </h3>
                     <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
                       In Progress
                     </span>
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Analyze current board composition and identify gaps in skills and diversity.
+                    Analyze current board composition and identify gaps in
+                    skills and diversity.
                   </p>
                   <div className="mt-2">
                     <div className="flex items-center justify-between text-xs">
@@ -182,13 +214,16 @@ export function CommitteeDashboard() {
 
                 <div className="rounded-lg border border-corporate-100 p-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-corporate-800">Executive Compensation Benchmarking</h3>
+                    <h3 className="font-semibold text-corporate-800">
+                      Executive Compensation Benchmarking
+                    </h3>
                     <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
                       In Progress
                     </span>
                   </div>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Conduct industry benchmarking for executive compensation packages.
+                    Conduct industry benchmarking for executive compensation
+                    packages.
                   </p>
                   <div className="mt-2">
                     <div className="flex items-center justify-between text-xs">
@@ -210,12 +245,16 @@ export function CommitteeDashboard() {
           <Card className="border-corporate-100">
             <CardHeader>
               <CardTitle>Committee Reports</CardTitle>
-              <CardDescription>Manage and prepare committee reports</CardDescription>
+              <CardDescription>
+                Manage and prepare committee reports
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="flex justify-end">
-                  <Button className="bg-corporate-600 hover:bg-corporate-700">Create New Report</Button>
+                  <Button className="bg-corporate-600 hover:bg-corporate-700">
+                    Create New Report
+                  </Button>
                 </div>
 
                 <div className="rounded-md border">
@@ -234,21 +273,28 @@ export function CommitteeDashboard() {
                       },
                       {
                         name: "Board Composition Recommendations",
-                        description: "Analysis and recommendations for board composition",
+                        description:
+                          "Analysis and recommendations for board composition",
                         status: "Not Started",
                         date: "Due: May 20, 2023",
                       },
                       {
                         name: "Executive Compensation Review",
-                        description: "Annual review of executive compensation packages",
+                        description:
+                          "Annual review of executive compensation packages",
                         status: "In Progress",
                         date: "Due: May 23, 2023",
                       },
                     ].map((report, index) => (
-                      <div key={index} className="grid grid-cols-4 items-center px-4 py-3">
+                      <div
+                        key={index}
+                        className="grid grid-cols-4 items-center px-4 py-3"
+                      >
                         <div className="col-span-2">
                           <div className="font-medium">{report.name}</div>
-                          <div className="text-xs text-muted-foreground">{report.description}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {report.description}
+                          </div>
                         </div>
                         <div>
                           <span
@@ -262,7 +308,9 @@ export function CommitteeDashboard() {
                           >
                             {report.status}
                           </span>
-                          <div className="text-xs text-muted-foreground mt-1">{report.date}</div>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {report.date}
+                          </div>
                         </div>
                         <div className="text-right">
                           <Button variant="ghost" size="sm">
@@ -279,5 +327,5 @@ export function CommitteeDashboard() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
