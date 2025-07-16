@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Download,
   MoreHorizontal,
@@ -52,6 +52,13 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import {
+  UserRole,
+  canManageMembers,
+  canViewAllKPIs,
+  getCurrentUserRole,
+  getUserRoleDisplayName,
+} from "@/lib/permissions";
 
 const boardMembers = [
   {
@@ -329,6 +336,11 @@ export function MemberDirectory() {
   const [selectedCommittee, setSelectedCommittee] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedContribution, setSelectedContribution] = useState("all");
+  const [userRole, setUserRole] = useState<UserRole>("shareholder");
+
+  useEffect(() => {
+    setUserRole(getCurrentUserRole());
+  }, []);
 
   // Calculate KPIs
   const totalMembers = boardMembers.length;
