@@ -1166,7 +1166,11 @@ export function InvestmentAnalystDashboard() {
                   <Globe className="h-5 w-5" />
                   <span>Curated Sector Data Feed</span>
                 </span>
-                <Button size="sm" variant="outline">
+                <Button
+                  onClick={handleRefreshMarketData}
+                  size="sm"
+                  variant="outline"
+                >
                   <RefreshCw className="mr-2 h-4 w-4" />
                   Refresh Data
                 </Button>
