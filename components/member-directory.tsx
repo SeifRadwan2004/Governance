@@ -772,7 +772,7 @@ export function MemberDirectory() {
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>View Full Profile</DropdownMenuItem>
                         <DropdownMenuItem>Contact</DropdownMenuItem>
-                        {canManageMembers(userRole) && (
+                        {(userRole === "admin" || userRole === "chairman") && (
                           <>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>Edit Member</DropdownMenuItem>
