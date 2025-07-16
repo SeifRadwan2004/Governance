@@ -398,27 +398,80 @@ export function MemberDirectory() {
     {} as Record<string, number>,
   );
 
-  const filteredMembers = boardMembers.filter((member) => {
-    const matchesSearch =
-      member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      member.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      member.expertise.some((exp) =>
-        exp.toLowerCase().includes(searchTerm.toLowerCase()),
+  // Filter sensitive information based on user role
+  const getFilteredMemberData = (member: any) => {
+    const publicData = {
+      ...member,
+      // Always show basic info
+      id: member.id,
+      name: member.name,
+      role: member.role,
+      committees: member.committees,
+      expertise: member.expertise,
+      education: member.education,
+      experience: member.experience,
+      status: member.status,
+      avatar: member.avatar,
+      initials: member.initials,
+    };
+
+    // Role-based data filtering
+    switch (userRole) {
+      case "admin":
+      case "chairman":
+        return member; // Full access
+      case "ceo":
+      case "md":
+      case "bod":
+      case "committee":
+      case "legal":
+        return {
+          ...publicData,
+          email: member.email,
+          phone: member.phone,
+          location: member.location,
+          meetingAttendance: member.meetingAttendance,
+          votingParticipation: member.votingParticipation,
+          // Hide sensitive performance data
+        };
+      case "shareholder":
+        return {
+          ...publicData,
+          // Shareholders get minimal info
+          tenure: member.tenure,
+          joinDate: member.joinDate,
+        };
+      default:
+        return publicData; // Minimal public info only
+    }
+  };
+
+  const filteredMembers = boardMembers
+    .map(getFilteredMemberData)
+    .filter((member) => {
+      const matchesSearch =
+        member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        member.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        member.expertise.some((exp: string) =>
+          exp.toLowerCase().includes(searchTerm.toLowerCase()),
+        );
+
+      const matchesCommittee =
+        selectedCommittee === "all" ||
+        member.committees.includes(selectedCommittee);
+      const matchesStatus =
+        selectedStatus === "all" || member.status === selectedStatus;
+      const matchesContribution =
+        selectedContribution === "all" ||
+        member.contributionLevel === selectedContribution;
+
+      return (
+        matchesSearch &&
+        matchesCommittee &&
+        matchesStatus &&
+        matchesContribution
       );
-
-    const matchesCommittee =
-      selectedCommittee === "all" ||
-      member.committees.includes(selectedCommittee);
-    const matchesStatus =
-      selectedStatus === "all" || member.status === selectedStatus;
-    const matchesContribution =
-      selectedContribution === "all" ||
-      member.contributionLevel === selectedContribution;
-
-    return (
-      matchesSearch && matchesCommittee && matchesStatus && matchesContribution
-    );
-  });
+    });
 
   const getContributionBadge = (level: string) => {
     const colors = {
