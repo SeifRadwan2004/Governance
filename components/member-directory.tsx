@@ -766,14 +766,20 @@ export function MemberDirectory() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>View Full Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Edit Member</DropdownMenuItem>
                         <DropdownMenuItem>Contact</DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Performance Review</DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-destructive">
-                          Remove Member
-                        </DropdownMenuItem>
+                        {canManageMembers(userRole) && (
+                          <>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Edit Member</DropdownMenuItem>
+                            <DropdownMenuItem>
+                              Performance Review
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-destructive">
+                              Remove Member
+                            </DropdownMenuItem>
+                          </>
+                        )}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
