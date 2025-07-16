@@ -195,8 +195,15 @@ export default function KPIsPage() {
             KPIs Dashboard
           </h1>
           <p className="text-muted-foreground">
-            Comprehensive governance performance metrics and analytics
+            {userRole === "shareholder"
+              ? "View key financial and governance metrics relevant to shareholders"
+              : userRole === "admin" || userRole === "chairman"
+                ? "Comprehensive governance performance metrics and analytics"
+                : "View governance performance metrics for your role"}
           </p>
+          <Badge variant="outline" className="mt-2">
+            {getUserRoleDisplayName(userRole)}
+          </Badge>
         </div>
         <div className="flex gap-2">
           <Select value={timeframe} onValueChange={setTimeframe}>
@@ -374,13 +381,28 @@ export default function KPIsPage() {
         onValueChange={setActiveTab}
         className="space-y-4"
       >
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList
+          className={`grid w-full grid-cols-${Math.min(availableKPIs.length + 2, 6)}`}
+        >
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="governance">Governance</TabsTrigger>
-          <TabsTrigger value="meetings">Meetings</TabsTrigger>
-          <TabsTrigger value="decisions">Decisions</TabsTrigger>
-          <TabsTrigger value="members">Members</TabsTrigger>
-          <TabsTrigger value="benchmarks">Benchmarks</TabsTrigger>
+          {availableKPIs.includes("governance") && (
+            <TabsTrigger value="governance">Governance</TabsTrigger>
+          )}
+          {availableKPIs.includes("meetings") && (
+            <TabsTrigger value="meetings">Meetings</TabsTrigger>
+          )}
+          {availableKPIs.includes("decisions") && (
+            <TabsTrigger value="decisions">Decisions</TabsTrigger>
+          )}
+          {availableKPIs.includes("members") && (
+            <TabsTrigger value="members">Members</TabsTrigger>
+          )}
+          {availableKPIs.includes("financial") && (
+            <TabsTrigger value="financial">Financial</TabsTrigger>
+          )}
+          {(userRole === "admin" || userRole === "chairman") && (
+            <TabsTrigger value="benchmarks">Benchmarks</TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
