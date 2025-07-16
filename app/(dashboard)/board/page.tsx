@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   UserCheck,
   Plus,
@@ -50,12 +50,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
+import { UserRole, getCurrentUserRole } from "@/lib/permissions";
 
 export default function BoardPage() {
   const [activeTab, setActiveTab] = useState("members");
   const [searchQuery, setSearchQuery] = useState("");
   const [filterRole, setFilterRole] = useState("all");
+  const [userRole, setUserRole] = useState<UserRole>("shareholder");
   const { toast } = useToast();
+
+  useEffect(() => {
+    setUserRole(getCurrentUserRole());
+  }, []);
 
   // Mock board members data
   const boardMembers = [
@@ -370,13 +376,15 @@ export default function BoardPage() {
             Manage board composition, committees, and governance activities
           </p>
         </div>
-        <Button
-          onClick={handleAddMember}
-          className="bg-corporate-600 hover:bg-corporate-700"
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Add Board Member
-        </Button>
+        {(userRole === "admin" || userRole === "chairman") && (
+          <Button
+            onClick={handleAddMember}
+            className="bg-corporate-600 hover:bg-corporate-700"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Board Member
+          </Button>
+        )}
       </div>
 
       {/* Key Metrics */}
@@ -518,13 +526,18 @@ export default function BoardPage() {
                             <Eye className="mr-2 h-4 w-4" />
                             View Profile
                           </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => handleEditMember(member.id)}
-                          >
-                            <Edit className="mr-2 h-4 w-4" />
-                            Edit
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
+                          {(userRole === "admin" ||
+                            userRole === "chairman") && (
+                            <>
+                              <DropdownMenuItem
+                                onClick={() => handleEditMember(member.id)}
+                              >
+                                <Edit className="mr-2 h-4 w-4" />
+                                Edit
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                            </>
+                          )}
                           <DropdownMenuItem
                             onClick={() => handleContactMember(member.id)}
                           >
