@@ -461,76 +461,88 @@ export function DecisionTracker() {
             Decision Tracker
           </h2>
           <p className="text-muted-foreground">
-            Track, manage, and analyze board decisions with comprehensive
-            implementation monitoring
+            {canCreateProposals(userRole)
+              ? "Track, manage, and analyze board decisions with comprehensive implementation monitoring"
+              : userRole === "shareholder"
+                ? "View and vote on shareholder resolutions and company decisions"
+                : "View decisions and cast your votes on board matters"}
           </p>
+          <Badge variant="outline" className="mt-2">
+            {getUserRoleDisplayName(userRole)}
+          </Badge>
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="bg-corporate-600 hover:bg-corporate-700">
-              <Plus className="mr-2 h-4 w-4" />
-              New Proposal
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px]">
-            <DialogHeader>
-              <DialogTitle>Submit New Proposal</DialogTitle>
-              <DialogDescription>
-                Create a new proposal for board consideration
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="title">Proposal Title</Label>
-                <Input id="title" placeholder="Enter proposal title" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Enter proposal description"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
+        {canCreateProposals(userRole) && (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="bg-corporate-600 hover:bg-corporate-700">
+                <Plus className="mr-2 h-4 w-4" />
+                {userRole === "shareholder"
+                  ? "Shareholder Proposal"
+                  : "New Proposal"}
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[600px]">
+              <DialogHeader>
+                <DialogTitle>Submit New Proposal</DialogTitle>
+                <DialogDescription>
+                  Create a new proposal for board consideration
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="category">Category</Label>
-                  <Select>
-                    <SelectTrigger id="category">
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="finance">Finance</SelectItem>
-                      <SelectItem value="governance">Governance</SelectItem>
-                      <SelectItem value="strategy">Strategy</SelectItem>
-                      <SelectItem value="compensation">Compensation</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="title">Proposal Title</Label>
+                  <Input id="title" placeholder="Enter proposal title" />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="priority">Priority</Label>
-                  <Select>
-                    <SelectTrigger id="priority">
-                      <SelectValue placeholder="Select priority" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="high">High</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="low">Low</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Enter proposal description"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="category">Category</Label>
+                    <Select>
+                      <SelectTrigger id="category">
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="finance">Finance</SelectItem>
+                        <SelectItem value="governance">Governance</SelectItem>
+                        <SelectItem value="strategy">Strategy</SelectItem>
+                        <SelectItem value="compensation">
+                          Compensation
+                        </SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="priority">Priority</Label>
+                    <Select>
+                      <SelectTrigger id="priority">
+                        <SelectValue placeholder="Select priority" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="high">High</SelectItem>
+                        <SelectItem value="medium">Medium</SelectItem>
+                        <SelectItem value="low">Low</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="supporting-docs">Supporting Documents</Label>
+                  <Input id="supporting-docs" type="file" multiple />
                 </div>
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="supporting-docs">Supporting Documents</Label>
-                <Input id="supporting-docs" type="file" multiple />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">Submit Proposal</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+              <DialogFooter>
+                <Button type="submit">Submit Proposal</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
 
       {/* KPI Dashboard */}
