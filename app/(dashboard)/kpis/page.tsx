@@ -48,7 +48,6 @@ import {
   getCurrentUserRole,
   getUserRoleDisplayName,
 } from "@/lib/permissions";
-import { Badge } from "@/components/ui/badge";
 
 export default function KPIsPage() {
   const [timeframe, setTimeframe] = useState("30d");
