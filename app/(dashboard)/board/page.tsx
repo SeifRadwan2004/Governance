@@ -526,13 +526,18 @@ export default function BoardPage() {
                             <Eye className="mr-2 h-4 w-4" />
                             View Profile
                           </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => handleEditMember(member.id)}
-                          >
-                            <Edit className="mr-2 h-4 w-4" />
-                            Edit
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
+                          {(userRole === "admin" ||
+                            userRole === "chairman") && (
+                            <>
+                              <DropdownMenuItem
+                                onClick={() => handleEditMember(member.id)}
+                              >
+                                <Edit className="mr-2 h-4 w-4" />
+                                Edit
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                            </>
+                          )}
                           <DropdownMenuItem
                             onClick={() => handleContactMember(member.id)}
                           >
