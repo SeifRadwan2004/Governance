@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 // Import AdminDashboard as a default import
 import AdminDashboard from "@/components/admin-dashboard";
-import { AssemblyDashboard } from "@/components/assembly-dashboard";
+
 import { BODDashboard } from "@/components/bod-dashboard";
 import { CEODashboard } from "@/components/ceo-dashboard";
 import { ChairmanDashboard } from "@/components/chairman-dashboard";
@@ -58,8 +58,7 @@ export default function DashboardPage() {
       return <AdminDashboard />;
     case "shareholder":
       return <ShareholderDashboard />;
-    case "assembly":
-      return <AssemblyDashboard />;
+
     case "chairman":
       return <ChairmanDashboard />;
     case "md":

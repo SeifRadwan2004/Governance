@@ -71,6 +71,7 @@ import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
+import { useToast } from "@/hooks/use-toast";
 
 export function CompanyRecruiterDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -78,6 +79,76 @@ export function CompanyRecruiterDashboard() {
   const [selectedSector, setSelectedSector] = useState("");
   const [experienceRange, setExperienceRange] = useState([5]);
   const [reputationFilter, setReputationFilter] = useState("");
+  const { toast } = useToast();
+
+  // Button handlers
+  const handleManageCompanyProfile = () => {
+    toast({
+      title: "Manage Company Profile",
+      description: "Opening company profile management form...",
+    });
+  };
+
+  const handleSearchCandidates = () => {
+    setActiveTab("candidates");
+    toast({
+      title: "Search Candidates",
+      description: "Navigating to candidate search section...",
+    });
+  };
+
+  const handleSendInvitation = () => {
+    setActiveTab("invitations");
+    toast({
+      title: "Send Invitation",
+      description: "Opening invitation management section...",
+    });
+  };
+
+  const handlePostToWall = () => {
+    setActiveTab("company-wall");
+    toast({
+      title: "Post to Wall",
+      description: "Opening company wall section...",
+    });
+  };
+
+  const handleCreateReport = () => {
+    toast({
+      title: "Create Report",
+      description: "Generating recruitment analytics report...",
+    });
+  };
+
+  const handleViewCandidate = (candidateId: number) => {
+    const candidate = candidates.find((c) => c.id === candidateId);
+    toast({
+      title: "View Candidate",
+      description: `Opening detailed profile for ${candidate?.name}...`,
+    });
+  };
+
+  const handleInviteCandidate = (candidateId: number) => {
+    const candidate = candidates.find((c) => c.id === candidateId);
+    toast({
+      title: "Send Invitation",
+      description: `Sending board invitation to ${candidate?.name}...`,
+    });
+  };
+
+  const handleSendNewInvitation = () => {
+    toast({
+      title: "New Invitation",
+      description: "Opening invitation creation form...",
+    });
+  };
+
+  const handleCreatePost = () => {
+    toast({
+      title: "Create Post",
+      description: "Opening post creation form...",
+    });
+  };
 
   // Mock data
   const companyInfo = {
@@ -263,11 +334,15 @@ export function CompanyRecruiterDashboard() {
       );
 
     const matchesSector =
-      !selectedSector || candidate.sector === selectedSector;
+      !selectedSector ||
+      selectedSector === "all" ||
+      candidate.sector === selectedSector;
     const matchesExperience =
       parseInt(candidate.experience) >= experienceRange[0];
     const matchesReputation =
-      !reputationFilter || candidate.rating >= parseFloat(reputationFilter);
+      !reputationFilter ||
+      reputationFilter === "all" ||
+      candidate.rating >= parseFloat(reputationFilter);
 
     return (
       matchesSearch && matchesSector && matchesExperience && matchesReputation
@@ -326,7 +401,10 @@ export function CompanyRecruiterDashboard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">
+            <Button
+              onClick={handleManageCompanyProfile}
+              className="w-full bg-blue-600 hover:bg-blue-700"
+            >
               <Edit className="mr-2 h-4 w-4" />
               Manage Company Profile
             </Button>
@@ -380,19 +458,35 @@ export function CompanyRecruiterDashboard() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleSearchCandidates}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Search className="h-5 w-5 mb-2" />
                   Search Candidates
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleSendInvitation}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Send className="h-5 w-5 mb-2" />
                   Send Invitation
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handlePostToWall}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Plus className="h-5 w-5 mb-2" />
                   Post to Wall
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleCreateReport}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <FileText className="h-5 w-5 mb-2" />
                   Create Report
                 </Button>
@@ -566,7 +660,7 @@ export function CompanyRecruiterDashboard() {
                       <SelectValue placeholder="Sector" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Sectors</SelectItem>
+                      <SelectItem value="all">All Sectors</SelectItem>
                       <SelectItem value="Technology">Technology</SelectItem>
                       <SelectItem value="Financial Services">
                         Financial Services
@@ -585,7 +679,7 @@ export function CompanyRecruiterDashboard() {
                       <SelectValue placeholder="Rating" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Ratings</SelectItem>
+                      <SelectItem value="all">All Ratings</SelectItem>
                       <SelectItem value="4.5">4.5+ Stars</SelectItem>
                       <SelectItem value="4.0">4.0+ Stars</SelectItem>
                       <SelectItem value="3.5">3.5+ Stars</SelectItem>
@@ -712,11 +806,16 @@ export function CompanyRecruiterDashboard() {
                         <div>Active {candidate.lastActive}</div>
                       </div>
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleViewCandidate(candidate.id)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <Eye className="mr-1 h-3 w-3" />
                           View
                         </Button>
                         <Button
+                          onClick={() => handleInviteCandidate(candidate.id)}
                           size="sm"
                           className="bg-blue-600 hover:bg-blue-700"
                         >
@@ -737,7 +836,7 @@ export function CompanyRecruiterDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Board Invitations</span>
-                <Button size="sm">
+                <Button onClick={handleSendNewInvitation} size="sm">
                   <Plus className="mr-2 h-4 w-4" />
                   Send New Invitation
                 </Button>
@@ -874,7 +973,7 @@ export function CompanyRecruiterDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Company Wall</span>
-                <Button size="sm">
+                <Button onClick={handleCreatePost} size="sm">
                   <Plus className="mr-2 h-4 w-4" />
                   Create Post
                 </Button>

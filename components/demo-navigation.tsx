@@ -55,12 +55,7 @@ export function DemoNavigation() {
       icon: User,
       description: "View shareholding and delegate voting rights",
     },
-    {
-      id: "assembly",
-      name: "General Assembly",
-      icon: Users,
-      description: "Participate in meetings and vote on resolutions",
-    },
+
     {
       id: "chairman",
       name: "Chairman",

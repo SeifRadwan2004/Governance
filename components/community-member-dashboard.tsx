@@ -42,6 +42,10 @@ import {
   Download,
   Verified,
   Flag,
+  DollarSign,
+  ShoppingCart,
+  CreditCard,
+  Newspaper,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -68,12 +72,18 @@ import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Textarea } from "@/components/ui/textarea";
+import { ProfileEditForm } from "@/components/profile-edit-form";
+import { CreatePostModal } from "@/components/create-post-modal";
+import { useToast } from "@/hooks/use-toast";
 
 export function CommunityMemberDashboard() {
   const [activeTab, setActiveTab] = useState("feed");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSector, setSelectedSector] = useState("all");
   const [postType, setPostType] = useState("all");
+  const [isProfileEditOpen, setIsProfileEditOpen] = useState(false);
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+  const { toast } = useToast();
 
   // Mock data
   const memberProfile = {
@@ -188,34 +198,81 @@ export function CommunityMemberDashboard() {
     },
   ];
 
-  const legalAnnouncements = [
+  const globalHeadlines = [
     {
       id: 1,
-      company: "TechVentures Legal",
-      title: "Updated Privacy Policy and Board Governance Framework",
-      dueDate: "Jan 31, 2025",
-      status: "pending",
-      priority: "high",
-      description:
-        "Mandatory acknowledgment required for updated privacy policy.",
+      title: "Global ESG Regulations Tighten Across Major Markets",
+      source: "Financial Times",
+      category: "Regulatory",
+      timestamp: "2 hours ago",
+      summary:
+        "New sustainability reporting requirements announced by EU, affecting multinational corporations worldwide.",
+      impact: "high",
+      readTime: "3 min read",
     },
     {
       id: 2,
-      company: "HealthCorp Industries",
-      title: "Shareholder Rights Update",
-      dueDate: "Feb 15, 2025",
-      status: "pending",
-      priority: "medium",
-      description: "New shareholder communication protocols.",
+      title: "AI Governance Standards Emerge from G20 Summit",
+      source: "Reuters",
+      category: "Technology",
+      timestamp: "5 hours ago",
+      summary:
+        "International consensus reached on AI transparency and accountability in corporate governance.",
+      impact: "medium",
+      readTime: "4 min read",
     },
     {
       id: 3,
-      company: "Energy Solutions Board",
-      title: "Environmental Compliance Changes",
-      dueDate: "Jan 25, 2025",
-      status: "confirmed",
-      priority: "high",
-      description: "Updated environmental reporting requirements.",
+      title: "Market Volatility Drives Board Oversight Changes",
+      source: "Wall Street Journal",
+      category: "Markets",
+      timestamp: "1 day ago",
+      summary:
+        "Rising economic uncertainty prompts boards to enhance risk management frameworks.",
+      impact: "high",
+      readTime: "5 min read",
+    },
+  ];
+
+  const investmentReports = [
+    {
+      id: 1,
+      title: "Q1 2025 Corporate Governance Trends Report",
+      description:
+        "Comprehensive analysis of emerging governance practices across Fortune 500 companies",
+      price: 149,
+      category: "Governance",
+      pages: 85,
+      publishDate: "March 2025",
+      rating: 4.8,
+      reviews: 124,
+      preview: true,
+    },
+    {
+      id: 2,
+      title: "ESG Investment Strategies: 2025 Market Outlook",
+      description:
+        "Deep dive into sustainable investment opportunities and regulatory compliance strategies",
+      price: 199,
+      category: "ESG",
+      pages: 120,
+      publishDate: "February 2025",
+      rating: 4.9,
+      reviews: 89,
+      preview: true,
+    },
+    {
+      id: 3,
+      title: "Board Composition Analytics: Diversity & Performance",
+      description:
+        "Statistical analysis of board diversity impact on corporate performance metrics",
+      price: 129,
+      category: "Analytics",
+      pages: 67,
+      publishDate: "January 2025",
+      rating: 4.7,
+      reviews: 156,
+      preview: false,
     },
   ];
 
@@ -273,22 +330,149 @@ export function CommunityMemberDashboard() {
     return matchesSearch && matchesSector && matchesType;
   });
 
-  const handleConfirmAnnouncement = (announcementId: number) => {
-    // Handle confirmation logic
-    console.log("Confirmed announcement:", announcementId);
+  // Initialize state with data
+  const [posts, setPosts] = useState(sectorFeed);
+  const [profile, setProfile] = useState(memberProfile);
+
+  const handlePurchaseReport = (reportId: number) => {
+    const report = investmentReports.find((r) => r.id === reportId);
+    toast({
+      title: "Purchase Initiated",
+      description: `Starting purchase process for "${report?.title}"`,
+    });
+    // In a real app, this would integrate with payment processing
+  };
+
+  const handlePreviewReport = (reportId: number) => {
+    const report = investmentReports.find((r) => r.id === reportId);
+    toast({
+      title: "Opening Preview",
+      description: `Opening preview for "${report?.title}"`,
+    });
+    // In a real app, this would open a preview modal or new tab
+  };
+
+  const handleEditProfile = () => {
+    setIsProfileEditOpen(true);
+  };
+
+  const handleSaveProfile = (updatedProfile: any) => {
+    setProfile({ ...profile, ...updatedProfile });
+    toast({
+      title: "Profile Updated",
+      description: "Your profile has been successfully updated.",
+    });
+  };
+
+  const handleCreatePost = () => {
+    setIsCreatePostOpen(true);
+  };
+
+  const handleSubmitPost = (postData: any) => {
+    const newPost = {
+      id: posts.length + 1,
+      type: postData.type,
+      author: profile.name,
+      authorTitle: profile.title,
+      avatar: profile.avatar,
+      sector: postData.sector,
+      timestamp: "just now",
+      title: postData.title,
+      content: postData.content,
+      likes: 0,
+      comments: 0,
+      shares: 0,
+      hasLiked: false,
+      hasCommented: false,
+      hasShared: false,
+      tags: postData.tags,
+      isPinned: false,
+      isFollowing: false,
+    };
+    setPosts([newPost, ...posts]);
+    toast({
+      title: "Post Created",
+      description: "Your post has been published successfully.",
+    });
+  };
+
+  const handleManageFollowing = () => {
+    toast({
+      title: "Following Management",
+      description: "Opening following management panel...",
+    });
+  };
+
+  const handleFindToFollow = () => {
+    setActiveTab("discover");
+  };
+
+  const handleViewAnnouncements = () => {
+    setActiveTab("headlines");
+  };
+
+  const handleViewActivity = () => {
+    setActiveTab("activity");
+  };
+
+  const handleReadArticle = (headlineId: number) => {
+    const headline = globalHeadlines.find((h) => h.id === headlineId);
+    toast({
+      title: "Opening Article",
+      description: `Opening "${headline?.title}" in new tab`,
+    });
+    // In a real app, this would open the article URL
+  };
+
+  const handleSaveArticle = (headlineId: number) => {
+    const headline = globalHeadlines.find((h) => h.id === headlineId);
+    toast({
+      title: "Article Saved",
+      description: `"${headline?.title}" saved to your reading list`,
+    });
   };
 
   const handleFollow = (itemId: number) => {
-    // Handle follow logic
-    console.log("Following item:", itemId);
+    const suggestion = followingSuggestions.find((s) => s.id === itemId);
+    toast({
+      title: "Following",
+      description: `You are now following ${suggestion?.name}`,
+    });
+    // In a real app, this would update the following list
   };
 
   const handleReaction = (
     postId: number,
     reactionType: "like" | "comment" | "share",
   ) => {
-    // Handle reaction logic
-    console.log("Reaction:", reactionType, "on post:", postId);
+    const updatedPosts = posts.map((post) => {
+      if (post.id === postId) {
+        switch (reactionType) {
+          case "like":
+            return {
+              ...post,
+              hasLiked: !post.hasLiked,
+              likes: post.hasLiked ? post.likes - 1 : post.likes + 1,
+            };
+          case "comment":
+            toast({
+              title: "Comment Feature",
+              description: "Opening comment dialog...",
+            });
+            return post;
+          case "share":
+            return {
+              ...post,
+              hasShared: !post.hasShared,
+              shares: post.hasShared ? post.shares - 1 : post.shares + 1,
+            };
+          default:
+            return post;
+        }
+      }
+      return post;
+    });
+    setPosts(updatedPosts);
   };
 
   return (
@@ -347,7 +531,10 @@ export function CommunityMemberDashboard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full bg-purple-600 hover:bg-purple-700">
+            <Button
+              className="w-full bg-purple-600 hover:bg-purple-700"
+              onClick={handleEditProfile}
+            >
               <Settings className="mr-2 h-4 w-4" />
               Edit Profile
             </Button>
@@ -383,19 +570,35 @@ export function CommunityMemberDashboard() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                  onClick={handleCreatePost}
+                >
                   <Plus className="h-5 w-5 mb-2" />
                   Create Post
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                  onClick={handleFindToFollow}
+                >
                   <UserPlus className="h-5 w-5 mb-2" />
                   Find to Follow
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                  onClick={handleViewAnnouncements}
+                >
                   <Bell className="h-5 w-5 mb-2" />
                   Announcements
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                  onClick={handleViewActivity}
+                >
                   <Activity className="h-5 w-5 mb-2" />
                   My Activity
                 </Button>
@@ -405,38 +608,54 @@ export function CommunityMemberDashboard() {
         </div>
       </div>
 
-      {/* Legal Announcements Alert */}
-      {legalAnnouncements.some(
-        (announcement) => announcement.status === "pending",
-      ) && (
-        <Alert className="border-orange-200 bg-orange-50">
-          <AlertTriangle className="h-4 w-4 text-orange-600" />
-          <AlertTitle className="text-orange-800">
-            Pending Legal Confirmations
-          </AlertTitle>
-          <AlertDescription className="text-orange-700">
-            You have{" "}
-            {legalAnnouncements.filter((a) => a.status === "pending").length}{" "}
-            legal announcements requiring confirmation.
-            <Button variant="link" className="p-0 h-auto text-orange-600 ml-2">
-              Review Now
-            </Button>
-          </AlertDescription>
-        </Alert>
-      )}
-
       {/* Main Content Tabs */}
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
         className="space-y-6"
       >
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="feed">Feed</TabsTrigger>
-          <TabsTrigger value="following">Following</TabsTrigger>
-          <TabsTrigger value="announcements">Announcements</TabsTrigger>
-          <TabsTrigger value="activity">My Activity</TabsTrigger>
-          <TabsTrigger value="discover">Discover</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 xl:grid-cols-6 gap-0.5">
+          <TabsTrigger
+            value="feed"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            Feed
+          </TabsTrigger>
+          <TabsTrigger
+            value="following"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">Following</span>
+            <span className="xl:hidden">Follow</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="headlines"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">Global Headlines</span>
+            <span className="xl:hidden">News</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="reports"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">Investment Reports</span>
+            <span className="xl:hidden">Reports</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="activity"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">My Activity</span>
+            <span className="xl:hidden">Activity</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="discover"
+            className="text-[10px] sm:text-xs xl:text-sm px-1 xl:px-3"
+          >
+            <span className="hidden xl:inline">Discover</span>
+            <span className="xl:hidden">More</span>
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="feed" className="space-y-6">
@@ -592,30 +811,6 @@ export function CommunityMemberDashboard() {
                           </Button>
                         </div>
                       )}
-
-                      {/* Legal Confirmation */}
-                      {post.requiresConfirmation && !post.isConfirmed && (
-                        <Alert className="border-orange-200 bg-orange-50">
-                          <AlertTriangle className="h-4 w-4 text-orange-600" />
-                          <AlertTitle className="text-orange-800">
-                            Confirmation Required
-                          </AlertTitle>
-                          <AlertDescription className="text-orange-700 flex items-center justify-between">
-                            <span>
-                              You must acknowledge receipt of this legal
-                              announcement.
-                            </span>
-                            <Button
-                              size="sm"
-                              className="bg-orange-600 hover:bg-orange-700"
-                              onClick={() => handleConfirmAnnouncement(post.id)}
-                            >
-                              <CheckCircle className="mr-2 h-3 w-3" />
-                              Confirm Receipt
-                            </Button>
-                          </AlertDescription>
-                        </Alert>
-                      )}
                     </div>
 
                     {/* Engagement Actions */}
@@ -690,7 +885,9 @@ export function CommunityMemberDashboard() {
                     </div>
                   ))}
                 </div>
-                <Button className="w-full">Manage Following List</Button>
+                <Button className="w-full" onClick={handleManageFollowing}>
+                  Manage Following List
+                </Button>
               </CardContent>
             </Card>
 
@@ -728,100 +925,249 @@ export function CommunityMemberDashboard() {
           </div>
         </TabsContent>
 
-        <TabsContent value="announcements" className="space-y-6">
+        <TabsContent value="headlines" className="space-y-6">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <Bell className="h-5 w-5" />
-                <span>Legal Announcements</span>
+                <Newspaper className="h-5 w-5" />
+                <span>Global Headlines</span>
               </CardTitle>
               <CardDescription>
-                Important legal notices and compliance requirements requiring
-                your confirmation
+                Latest news and developments affecting corporate governance
+                worldwide
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {legalAnnouncements.map((announcement) => (
+                {globalHeadlines.map((headline) => (
                   <Card
-                    key={announcement.id}
-                    className={`${
-                      announcement.priority === "high"
+                    key={headline.id}
+                    className={`hover:shadow-md transition-shadow ${
+                      headline.impact === "high"
                         ? "border-red-200 bg-red-50"
-                        : announcement.priority === "medium"
+                        : headline.impact === "medium"
                           ? "border-yellow-200 bg-yellow-50"
                           : "border-gray-200"
                     }`}
                   >
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between">
-                        <div className="space-y-2">
+                        <div className="space-y-2 flex-1">
                           <div className="flex items-center space-x-2">
+                            <Badge variant="outline">{headline.category}</Badge>
                             <Badge
                               variant={
-                                announcement.status === "confirmed"
-                                  ? "default"
-                                  : "destructive"
-                              }
-                            >
-                              {announcement.status.toUpperCase()}
-                            </Badge>
-                            <Badge
-                              variant={
-                                announcement.priority === "high"
+                                headline.impact === "high"
                                   ? "destructive"
-                                  : announcement.priority === "medium"
+                                  : headline.impact === "medium"
                                     ? "secondary"
                                     : "outline"
                               }
                             >
-                              {announcement.priority.toUpperCase()} PRIORITY
+                              {headline.impact.toUpperCase()} IMPACT
                             </Badge>
+                            <span className="text-xs text-muted-foreground">
+                              {headline.readTime}
+                            </span>
                           </div>
-                          <h3 className="font-semibold">
-                            {announcement.title}
+                          <h3 className="font-semibold text-lg">
+                            {headline.title}
                           </h3>
                           <p className="text-sm text-muted-foreground">
-                            {announcement.description}
+                            {headline.summary}
                           </p>
                           <div className="flex items-center space-x-4 text-xs text-muted-foreground">
                             <div className="flex items-center space-x-1">
-                              <Building className="h-3 w-3" />
-                              <span>{announcement.company}</span>
+                              <Globe className="h-3 w-3" />
+                              <span>{headline.source}</span>
                             </div>
                             <div className="flex items-center space-x-1">
-                              <Calendar className="h-3 w-3" />
-                              <span>Due: {announcement.dueDate}</span>
+                              <Clock className="h-3 w-3" />
+                              <span>{headline.timestamp}</span>
                             </div>
                           </div>
                         </div>
-                        <div className="flex flex-col space-y-2">
-                          {announcement.status === "pending" ? (
-                            <Button
-                              size="sm"
-                              className="bg-green-600 hover:bg-green-700"
-                              onClick={() =>
-                                handleConfirmAnnouncement(announcement.id)
-                              }
-                            >
-                              <CheckCircle className="mr-2 h-3 w-3" />
-                              Confirm
-                            </Button>
-                          ) : (
-                            <Badge className="bg-green-100 text-green-800">
-                              <CheckCircle className="mr-1 h-3 w-3" />
-                              Confirmed
-                            </Badge>
-                          )}
-                          <Button size="sm" variant="outline">
-                            <Eye className="mr-1 h-3 w-3" />
-                            View Details
+                        <div className="flex flex-col space-y-2 ml-4">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleReadArticle(headline.id)}
+                          >
+                            <ExternalLink className="mr-1 h-3 w-3" />
+                            Read Full Article
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleSaveArticle(headline.id)}
+                          >
+                            <Bookmark className="mr-1 h-3 w-3" />
+                            Save
                           </Button>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="reports" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <FileText className="h-5 w-5" />
+                <span>Investment Reports</span>
+              </CardTitle>
+              <CardDescription>
+                Browse and purchase professional investment and governance
+                reports
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {/* Filter and Search */}
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="flex-1">
+                    <Input
+                      placeholder="Search reports by title or category..."
+                      className="w-full"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Select defaultValue="all">
+                      <SelectTrigger className="w-[140px]">
+                        <SelectValue placeholder="Category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Categories</SelectItem>
+                        <SelectItem value="governance">Governance</SelectItem>
+                        <SelectItem value="esg">ESG</SelectItem>
+                        <SelectItem value="analytics">Analytics</SelectItem>
+                        <SelectItem value="compliance">Compliance</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select defaultValue="newest">
+                      <SelectTrigger className="w-[140px]">
+                        <SelectValue placeholder="Sort by" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="newest">Newest First</SelectItem>
+                        <SelectItem value="price-low">
+                          Price: Low to High
+                        </SelectItem>
+                        <SelectItem value="price-high">
+                          Price: High to Low
+                        </SelectItem>
+                        <SelectItem value="rating">Highest Rated</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Reports Grid */}
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {investmentReports.map((report) => (
+                    <Card
+                      key={report.id}
+                      className="hover:shadow-lg transition-shadow"
+                    >
+                      <CardContent className="p-6">
+                        <div className="space-y-4">
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <Badge variant="outline">{report.category}</Badge>
+                              <div className="flex items-center space-x-1">
+                                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                <span className="text-sm font-medium">
+                                  {report.rating}
+                                </span>
+                                <span className="text-xs text-muted-foreground">
+                                  ({report.reviews})
+                                </span>
+                              </div>
+                            </div>
+                            <h3 className="font-semibold text-lg leading-tight">
+                              {report.title}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {report.description}
+                            </p>
+                          </div>
+
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-muted-foreground">
+                                Pages:
+                              </span>
+                              <span className="font-medium">
+                                {report.pages}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-muted-foreground">
+                                Published:
+                              </span>
+                              <span className="font-medium">
+                                {report.publishDate}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between pt-4 border-t">
+                            <div className="flex items-center space-x-1">
+                              <DollarSign className="h-4 w-4 text-green-600" />
+                              <span className="text-xl font-bold text-green-600">
+                                ${report.price}
+                              </span>
+                            </div>
+                            <div className="flex space-x-2">
+                              {report.preview && (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => handlePreviewReport(report.id)}
+                                >
+                                  <Eye className="mr-1 h-3 w-3" />
+                                  Preview
+                                </Button>
+                              )}
+                              <Button
+                                size="sm"
+                                className="bg-blue-600 hover:bg-blue-700"
+                                onClick={() => handlePurchaseReport(report.id)}
+                              >
+                                <ShoppingCart className="mr-1 h-3 w-3" />
+                                Buy Now
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                {/* Purchase History */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <CreditCard className="h-5 w-5" />
+                      <span>Recent Purchases</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-center py-8 text-muted-foreground">
+                      <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p>No recent purchases</p>
+                      <p className="text-sm">
+                        Your purchased reports will appear here
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </CardContent>
           </Card>
@@ -975,6 +1321,20 @@ export function CommunityMemberDashboard() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Modals */}
+      <ProfileEditForm
+        isOpen={isProfileEditOpen}
+        onClose={() => setIsProfileEditOpen(false)}
+        profile={profile}
+        onSave={handleSaveProfile}
+      />
+
+      <CreatePostModal
+        isOpen={isCreatePostOpen}
+        onClose={() => setIsCreatePostOpen(false)}
+        onSubmit={handleSubmitPost}
+      />
     </div>
   );
 }

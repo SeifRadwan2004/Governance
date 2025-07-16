@@ -75,11 +75,105 @@ import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useToast } from "@/hooks/use-toast";
 
 export function InvestmentAnalystDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSector, setSelectedSector] = useState("all");
+  const { toast } = useToast();
+
+  // Button handlers
+  const handleEditProfile = () => {
+    toast({
+      title: "Edit Profile",
+      description: "Opening analyst profile editor...",
+    });
+  };
+
+  const handleNewReport = () => {
+    setActiveTab("reports");
+    toast({
+      title: "New Report",
+      description: "Opening report creation wizard...",
+    });
+  };
+
+  const handleViewAnalytics = () => {
+    setActiveTab("analytics");
+    toast({
+      title: "View Analytics",
+      description: "Navigating to analytics dashboard...",
+    });
+  };
+
+  const handleEarnings = () => {
+    setActiveTab("earnings");
+    toast({
+      title: "Earnings",
+      description: "Opening earnings management section...",
+    });
+  };
+
+  const handleMarketData = () => {
+    setActiveTab("market-data");
+    toast({
+      title: "Market Data",
+      description: "Accessing real-time market data feed...",
+    });
+  };
+
+  const handleCreateNewReport = () => {
+    toast({
+      title: "Create New Report",
+      description: "Opening investment report creation form...",
+    });
+  };
+
+  const handleViewReport = (reportId: number) => {
+    const report = publishedReports.find((r) => r.id === reportId);
+    toast({
+      title: "View Report",
+      description: `Opening detailed view for "${report?.title}"...`,
+    });
+  };
+
+  const handleEditReport = (reportId: number) => {
+    const report = publishedReports.find((r) => r.id === reportId);
+    toast({
+      title: "Edit Report",
+      description: `Opening editor for "${report?.title}"...`,
+    });
+  };
+
+  const handleReportAnalytics = (reportId: number) => {
+    const report = publishedReports.find((r) => r.id === reportId);
+    toast({
+      title: "Report Analytics",
+      description: `Opening analytics for "${report?.title}"...`,
+    });
+  };
+
+  const handleAddPaymentMethod = () => {
+    toast({
+      title: "Add Payment Method",
+      description: "Opening payment method setup...",
+    });
+  };
+
+  const handleDownloadInvoice = (month: string) => {
+    toast({
+      title: "Download Invoice",
+      description: `Generating invoice for ${month}...`,
+    });
+  };
+
+  const handleRefreshMarketData = () => {
+    toast({
+      title: "Refresh Market Data",
+      description: "Updating market data from live feeds...",
+    });
+  };
 
   // Mock data
   const analystProfile = {
@@ -379,7 +473,10 @@ export function InvestmentAnalystDashboard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full bg-green-600 hover:bg-green-700">
+            <Button
+              onClick={handleEditProfile}
+              className="w-full bg-green-600 hover:bg-green-700"
+            >
               <Edit className="mr-2 h-4 w-4" />
               Edit Profile
             </Button>
@@ -433,19 +530,35 @@ export function InvestmentAnalystDashboard() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleNewReport}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Plus className="h-5 w-5 mb-2" />
                   New Report
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleViewAnalytics}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <BarChart3 className="h-5 w-5 mb-2" />
                   View Analytics
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleEarnings}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Wallet className="h-5 w-5 mb-2" />
                   Earnings
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleMarketData}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Globe className="h-5 w-5 mb-2" />
                   Market Data
                 </Button>
@@ -600,7 +713,7 @@ export function InvestmentAnalystDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Published Reports</span>
-                <Button>
+                <Button onClick={handleCreateNewReport}>
                   <Plus className="mr-2 h-4 w-4" />
                   Create New Report
                 </Button>
@@ -721,15 +834,27 @@ export function InvestmentAnalystDashboard() {
                         </div>
                       )}
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleViewReport(report.id)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <Eye className="mr-1 h-3 w-3" />
                           View
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleEditReport(report.id)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <Edit className="mr-1 h-3 w-3" />
                           Edit
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleReportAnalytics(report.id)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <BarChart3 className="mr-1 h-3 w-3" />
                           Analytics
                         </Button>
@@ -965,7 +1090,11 @@ export function InvestmentAnalystDashboard() {
                     </div>
                   </div>
                 </div>
-                <Button variant="outline" className="w-full">
+                <Button
+                  onClick={handleAddPaymentMethod}
+                  variant="outline"
+                  className="w-full"
+                >
                   <Plus className="mr-2 h-4 w-4" />
                   Add Payment Method
                 </Button>
@@ -1012,7 +1141,11 @@ export function InvestmentAnalystDashboard() {
                         ${month.total.toLocaleString()}
                       </TableCell>
                       <TableCell>
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleDownloadInvoice(month.month)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <Download className="h-3 w-3 mr-1" />
                           Invoice
                         </Button>
@@ -1033,7 +1166,11 @@ export function InvestmentAnalystDashboard() {
                   <Globe className="h-5 w-5" />
                   <span>Curated Sector Data Feed</span>
                 </span>
-                <Button size="sm" variant="outline">
+                <Button
+                  onClick={handleRefreshMarketData}
+                  size="sm"
+                  variant="outline"
+                >
                   <RefreshCw className="mr-2 h-4 w-4" />
                   Refresh Data
                 </Button>
