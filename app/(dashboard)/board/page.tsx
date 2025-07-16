@@ -376,13 +376,15 @@ export default function BoardPage() {
             Manage board composition, committees, and governance activities
           </p>
         </div>
-        <Button
-          onClick={handleAddMember}
-          className="bg-corporate-600 hover:bg-corporate-700"
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Add Board Member
-        </Button>
+        {(userRole === "admin" || userRole === "chairman") && (
+          <Button
+            onClick={handleAddMember}
+            className="bg-corporate-600 hover:bg-corporate-700"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Board Member
+          </Button>
+        )}
       </div>
 
       {/* Key Metrics */}
