@@ -973,7 +973,7 @@ export function CompanyRecruiterDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Company Wall</span>
-                <Button size="sm">
+                <Button onClick={handleCreatePost} size="sm">
                   <Plus className="mr-2 h-4 w-4" />
                   Create Post
                 </Button>
