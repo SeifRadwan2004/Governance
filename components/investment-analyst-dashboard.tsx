@@ -713,7 +713,7 @@ export function InvestmentAnalystDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Published Reports</span>
-                <Button>
+                <Button onClick={handleCreateNewReport}>
                   <Plus className="mr-2 h-4 w-4" />
                   Create New Report
                 </Button>
