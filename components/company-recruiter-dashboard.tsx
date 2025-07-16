@@ -71,6 +71,7 @@ import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
+import { useToast } from "@/hooks/use-toast";
 
 export function CompanyRecruiterDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
