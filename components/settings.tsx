@@ -1420,8 +1420,9 @@ export function Settings() {
                 </div>
               </div>
             </CardContent>
-          </Card>
+                    </Card>
         </TabsContent>
+        )}
       </Tabs>
     </div>
   );
