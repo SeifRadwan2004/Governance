@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   CheckCircle,
   Clock,
@@ -60,6 +60,13 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  UserRole,
+  canCreateProposals,
+  canVoteOnDecisions,
+  getCurrentUserRole,
+  getUserRoleDisplayName,
+} from "@/lib/permissions";
 
 const decisions = [
   {
@@ -313,6 +320,11 @@ export function DecisionTracker() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedPriority, setSelectedPriority] = useState("all");
+  const [userRole, setUserRole] = useState<UserRole>("shareholder");
+
+  useEffect(() => {
+    setUserRole(getCurrentUserRole());
+  }, []);
 
   const handleCastVote = () => {
     router.push("/voting");
