@@ -458,19 +458,35 @@ export function CompanyRecruiterDashboard() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleSearchCandidates}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Search className="h-5 w-5 mb-2" />
                   Search Candidates
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleSendInvitation}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Send className="h-5 w-5 mb-2" />
                   Send Invitation
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handlePostToWall}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Plus className="h-5 w-5 mb-2" />
                   Post to Wall
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleCreateReport}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <FileText className="h-5 w-5 mb-2" />
                   Create Report
                 </Button>
