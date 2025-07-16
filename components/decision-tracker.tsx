@@ -395,7 +395,43 @@ export function DecisionTracker() {
     const matchesPriority =
       selectedPriority === "all" || decision.priority === selectedPriority;
 
-    return matchesSearch && matchesCategory && matchesStatus && matchesPriority;
+    // Role-based filtering
+    const hasAccess = (() => {
+      switch (userRole) {
+        case "admin":
+        case "chairman":
+          return true; // Full access
+        case "ceo":
+        case "md":
+          return (
+            decision.category !== "Compensation" ||
+            decision.title.toLowerCase().includes("board")
+          ); // Can't see their own compensation
+        case "bod":
+        case "committee":
+        case "legal":
+          return (
+            decision.category !== "Compensation" ||
+            !decision.title.toLowerCase().includes("executive")
+          ); // Can see board compensation but not executive details
+        case "shareholder":
+          return (
+            decision.category === "Finance" ||
+            decision.category === "Governance" ||
+            decision.title.toLowerCase().includes("shareholder")
+          );
+        default:
+          return decision.category === "Finance"; // Minimal access
+      }
+    })();
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesStatus &&
+      matchesPriority &&
+      hasAccess
+    );
   });
 
   const getStatusIcon = (status: string) => {
