@@ -806,11 +806,16 @@ export function CompanyRecruiterDashboard() {
                         <div>Active {candidate.lastActive}</div>
                       </div>
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleViewCandidate(candidate.id)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <Eye className="mr-1 h-3 w-3" />
                           View
                         </Button>
                         <Button
+                          onClick={() => handleInviteCandidate(candidate.id)}
                           size="sm"
                           className="bg-blue-600 hover:bg-blue-700"
                         >
