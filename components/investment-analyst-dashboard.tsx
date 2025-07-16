@@ -1141,7 +1141,11 @@ export function InvestmentAnalystDashboard() {
                         ${month.total.toLocaleString()}
                       </TableCell>
                       <TableCell>
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleDownloadInvoice(month.month)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <Download className="h-3 w-3 mr-1" />
                           Invoice
                         </Button>
