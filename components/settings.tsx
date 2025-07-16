@@ -257,12 +257,18 @@ export function Settings() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-corporate-800">
-            System Settings
+            {canManageSystemSettings(userRole)
+              ? "System Settings"
+              : "Profile Settings"}
           </h2>
           <p className="text-muted-foreground">
-            Manage your organization's governance settings with comprehensive
-            analytics and monitoring
+            {canManageSystemSettings(userRole)
+              ? "Manage your organization's governance settings with comprehensive analytics and monitoring"
+              : "Manage your profile and notification preferences"}
           </p>
+          <Badge variant="outline" className="mt-2">
+            {getUserRoleDisplayName(userRole)}
+          </Badge>
         </div>
         <Button variant="outline">
           <Download className="mr-2 h-4 w-4" />
@@ -340,12 +346,17 @@ export function Settings() {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="mb-6">
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="users">Users & Permissions</TabsTrigger>
-          <TabsTrigger value="committees">Committees</TabsTrigger>
+          {canManageSystemSettings(userRole) && (
+            <>
+              <TabsTrigger value="general">General</TabsTrigger>
+              <TabsTrigger value="users">Users & Permissions</TabsTrigger>
+              <TabsTrigger value="committees">Committees</TabsTrigger>
+              <TabsTrigger value="analytics">System Analytics</TabsTrigger>
+              <TabsTrigger value="security">Security</TabsTrigger>
+            </>
+          )}
+          <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="analytics">System Analytics</TabsTrigger>
-          <TabsTrigger value="security">Security</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general" className="w-full">
