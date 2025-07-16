@@ -836,7 +836,7 @@ export function CompanyRecruiterDashboard() {
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 <span>Board Invitations</span>
-                <Button size="sm">
+                <Button onClick={handleSendNewInvitation} size="sm">
                   <Plus className="mr-2 h-4 w-4" />
                   Send New Invitation
                 </Button>
