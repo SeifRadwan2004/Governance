@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   CalendarDays,
   ChevronLeft,
@@ -61,6 +61,13 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
+import {
+  UserRole,
+  canScheduleMeetings,
+  canManageMembers,
+  getCurrentUserRole,
+  getUserRoleDisplayName,
+} from "@/lib/permissions";
 
 const meetings = [
   {
@@ -282,6 +289,11 @@ export function MeetingScheduler() {
   const [selectedType, setSelectedType] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [userRole, setUserRole] = useState<UserRole>("shareholder");
+
+  useEffect(() => {
+    setUserRole(getCurrentUserRole());
+  }, []);
 
   // Calculate KPIs
   const totalMeetings = meetings.length;
@@ -366,105 +378,113 @@ export function MeetingScheduler() {
             Meetings Dashboard
           </h2>
           <p className="text-muted-foreground">
-            Schedule, manage, and track board and committee meetings with
-            comprehensive analytics
+            {canScheduleMeetings(userRole)
+              ? "Schedule, manage, and track board and committee meetings with comprehensive analytics"
+              : "View and track meetings you have access to"}
           </p>
+          <Badge variant="outline" className="mt-2">
+            {getUserRoleDisplayName(userRole)}
+          </Badge>
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="bg-corporate-600 hover:bg-corporate-700">
-              <Plus className="mr-2 h-4 w-4" />
-              Schedule Meeting
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px]">
-            <DialogHeader>
-              <DialogTitle>Schedule New Meeting</DialogTitle>
-              <DialogDescription>
-                Create a new meeting and notify all participants
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="title">Meeting Title</Label>
-                <Input id="title" placeholder="Enter meeting title" />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
+        {canScheduleMeetings(userRole) && (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="bg-corporate-600 hover:bg-corporate-700">
+                <Plus className="mr-2 h-4 w-4" />
+                Schedule Meeting
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[600px]">
+              <DialogHeader>
+                <DialogTitle>Schedule New Meeting</DialogTitle>
+                <DialogDescription>
+                  Create a new meeting and notify all participants
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="date">Date</Label>
-                  <Input id="date" type="date" />
+                  <Label htmlFor="title">Meeting Title</Label>
+                  <Input id="title" placeholder="Enter meeting title" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="date">Date</Label>
+                    <Input id="date" type="date" />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="time">Time</Label>
+                    <Input id="time" type="time" />
+                  </div>
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="time">Time</Label>
-                  <Input id="time" type="time" />
+                  <Label htmlFor="location">Location</Label>
+                  <Input id="location" placeholder="Enter meeting location" />
                 </div>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="location">Location</Label>
-                <Input id="location" placeholder="Enter meeting location" />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="type">Meeting Type</Label>
+                    <Select>
+                      <SelectTrigger id="type">
+                        <SelectValue placeholder="Select meeting type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="in-person">In-person</SelectItem>
+                        <SelectItem value="virtual">Virtual</SelectItem>
+                        <SelectItem value="hybrid">Hybrid</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="category">Category</Label>
+                    <Select>
+                      <SelectTrigger id="category">
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="board">Board</SelectItem>
+                        <SelectItem value="committee">Committee</SelectItem>
+                        <SelectItem value="executive">Executive</SelectItem>
+                        <SelectItem value="strategic">Strategic</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="type">Meeting Type</Label>
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Enter meeting description"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="attendees">Attendees</Label>
                   <Select>
-                    <SelectTrigger id="type">
-                      <SelectValue placeholder="Select meeting type" />
+                    <SelectTrigger id="attendees">
+                      <SelectValue placeholder="Select attendees" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="in-person">In-person</SelectItem>
-                      <SelectItem value="virtual">Virtual</SelectItem>
-                      <SelectItem value="hybrid">Hybrid</SelectItem>
+                      <SelectItem value="all-board">
+                        All Board Members
+                      </SelectItem>
+                      <SelectItem value="executive">
+                        Executive Committee
+                      </SelectItem>
+                      <SelectItem value="finance">Finance Committee</SelectItem>
+                      <SelectItem value="governance">
+                        Governance Committee
+                      </SelectItem>
+                      <SelectItem value="audit">Audit Committee</SelectItem>
+                      <SelectItem value="custom">Custom Selection</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="category">Category</Label>
-                  <Select>
-                    <SelectTrigger id="category">
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="board">Board</SelectItem>
-                      <SelectItem value="committee">Committee</SelectItem>
-                      <SelectItem value="executive">Executive</SelectItem>
-                      <SelectItem value="strategic">Strategic</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
               </div>
-              <div className="grid gap-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Enter meeting description"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="attendees">Attendees</Label>
-                <Select>
-                  <SelectTrigger id="attendees">
-                    <SelectValue placeholder="Select attendees" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all-board">All Board Members</SelectItem>
-                    <SelectItem value="executive">
-                      Executive Committee
-                    </SelectItem>
-                    <SelectItem value="finance">Finance Committee</SelectItem>
-                    <SelectItem value="governance">
-                      Governance Committee
-                    </SelectItem>
-                    <SelectItem value="audit">Audit Committee</SelectItem>
-                    <SelectItem value="custom">Custom Selection</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit">Schedule Meeting</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+              <DialogFooter>
+                <Button type="submit">Schedule Meeting</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
 
       {/* KPI Cards */}
