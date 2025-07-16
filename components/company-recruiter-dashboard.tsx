@@ -263,11 +263,15 @@ export function CompanyRecruiterDashboard() {
       );
 
     const matchesSector =
-      !selectedSector || candidate.sector === selectedSector;
+      !selectedSector ||
+      selectedSector === "all" ||
+      candidate.sector === selectedSector;
     const matchesExperience =
       parseInt(candidate.experience) >= experienceRange[0];
     const matchesReputation =
-      !reputationFilter || candidate.rating >= parseFloat(reputationFilter);
+      !reputationFilter ||
+      reputationFilter === "all" ||
+      candidate.rating >= parseFloat(reputationFilter);
 
     return (
       matchesSearch && matchesSector && matchesExperience && matchesReputation
