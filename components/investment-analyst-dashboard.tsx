@@ -834,15 +834,27 @@ export function InvestmentAnalystDashboard() {
                         </div>
                       )}
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleViewReport(report.id)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <Eye className="mr-1 h-3 w-3" />
                           View
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleEditReport(report.id)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <Edit className="mr-1 h-3 w-3" />
                           Edit
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button
+                          onClick={() => handleReportAnalytics(report.id)}
+                          size="sm"
+                          variant="outline"
+                        >
                           <BarChart3 className="mr-1 h-3 w-3" />
                           Analytics
                         </Button>
