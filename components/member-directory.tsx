@@ -1020,14 +1020,20 @@ export function MemberDirectory() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem>View Profile</DropdownMenuItem>
-                              <DropdownMenuItem>Edit Member</DropdownMenuItem>
-                              <DropdownMenuItem>
-                                Performance Review
-                              </DropdownMenuItem>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem className="text-destructive">
-                                Remove
-                              </DropdownMenuItem>
+                              {canManageMembers(userRole) && (
+                                <>
+                                  <DropdownMenuItem>
+                                    Edit Member
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem>
+                                    Performance Review
+                                  </DropdownMenuItem>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem className="text-destructive">
+                                    Remove
+                                  </DropdownMenuItem>
+                                </>
+                              )}
                             </DropdownMenuContent>
                           </DropdownMenu>
                         </td>
