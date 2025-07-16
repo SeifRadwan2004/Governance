@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Check,
   ChevronsUpDown,
@@ -80,6 +80,12 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
+import {
+  UserRole,
+  canManageSystemSettings,
+  getCurrentUserRole,
+  getUserRoleDisplayName,
+} from "@/lib/permissions";
 
 const users = [
   {
@@ -236,6 +242,15 @@ export function Settings() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [activeTab, setActiveTab] = useState("general");
+  const [userRole, setUserRole] = useState<UserRole>("shareholder");
+
+  useEffect(() => {
+    setUserRole(getCurrentUserRole());
+    // Non-admin users should start on profile tab
+    if (!canManageSystemSettings(getCurrentUserRole())) {
+      setActiveTab("profile");
+    }
+  }, []);
 
   return (
     <div className="flex flex-col gap-6">
