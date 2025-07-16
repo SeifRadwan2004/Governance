@@ -349,7 +349,47 @@ export function MeetingScheduler() {
     const matchesCategory =
       selectedCategory === "all" || meeting.category === selectedCategory;
 
-    return matchesSearch && matchesType && matchesStatus && matchesCategory;
+    // Role-based filtering
+    const hasAccess = (() => {
+      switch (userRole) {
+        case "admin":
+        case "chairman":
+          return true; // Full access
+        case "ceo":
+        case "md":
+          return (
+            meeting.category === "Board" ||
+            meeting.category === "Executive" ||
+            meeting.category === "Strategic"
+          );
+        case "bod":
+        case "committee":
+          return (
+            meeting.category === "Board" || meeting.category === "Committee"
+          );
+        case "legal":
+          return (
+            meeting.category === "Board" ||
+            meeting.category === "Committee" ||
+            meeting.title.toLowerCase().includes("legal")
+          );
+        case "shareholder":
+          return (
+            meeting.title.toLowerCase().includes("shareholder") ||
+            meeting.title.toLowerCase().includes("annual")
+          );
+        default:
+          return false;
+      }
+    })();
+
+    return (
+      matchesSearch &&
+      matchesType &&
+      matchesStatus &&
+      matchesCategory &&
+      hasAccess
+    );
   });
 
   const upcomingMeetings = meetings
@@ -751,16 +791,37 @@ export function MeetingScheduler() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem>Edit Meeting</DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <Upload className="mr-2 h-4 w-4" />
-                              Upload Documents
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>View Attendees</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-destructive">
-                              Cancel Meeting
-                            </DropdownMenuItem>
+                            {canScheduleMeetings(userRole) && (
+                              <>
+                                <DropdownMenuItem>
+                                  Edit Meeting
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                  <Upload className="mr-2 h-4 w-4" />
+                                  Upload Documents
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                  View Attendees
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem className="text-destructive">
+                                  Cancel Meeting
+                                </DropdownMenuItem>
+                              </>
+                            )}
+                            {!canScheduleMeetings(userRole) && (
+                              <>
+                                <DropdownMenuItem>
+                                  View Attendees
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                  Add to Calendar
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                  Download Agenda
+                                </DropdownMenuItem>
+                              </>
+                            )}
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>
