@@ -473,7 +473,10 @@ export function InvestmentAnalystDashboard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full bg-green-600 hover:bg-green-700">
+            <Button
+              onClick={handleEditProfile}
+              className="w-full bg-green-600 hover:bg-green-700"
+            >
               <Edit className="mr-2 h-4 w-4" />
               Edit Profile
             </Button>
