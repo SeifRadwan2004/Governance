@@ -1418,8 +1418,8 @@ export function Settings() {
                     1 day ago
                   </span>
                 </div>
-              </div>
-                        </CardContent>
+                            </div>
+            </CardContent>
           </Card>
         </TabsContent>
         )}
