@@ -1025,7 +1025,8 @@ export function MemberDirectory() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem>View Profile</DropdownMenuItem>
-                              {canManageMembers(userRole) && (
+                              {(userRole === "admin" ||
+                                userRole === "chairman") && (
                                 <>
                                   <DropdownMenuItem>
                                     Edit Member
