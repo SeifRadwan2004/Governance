@@ -783,61 +783,158 @@ export default function KPIsPage() {
           </div>
         </TabsContent>
 
-        <TabsContent value="benchmarks" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Industry Benchmarks</CardTitle>
-              <CardDescription>
-                Compare your performance against industry standards
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {Object.entries(benchmarkData).map(([category, data]) => (
-                  <div key={category} className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <h4 className="font-medium capitalize">{category}</h4>
-                      <div className="flex items-center gap-4 text-sm">
-                        <span className="text-muted-foreground">
-                          Industry: {data.industry}%
-                        </span>
-                        <span className="text-muted-foreground">
-                          Best: {data.best}%
-                        </span>
-                        <span
-                          className={`font-bold ${getBenchmarkColor(
-                            data.current,
-                            data.industry,
-                            data.best,
-                          )}`}
-                        >
-                          You: {data.current}%
-                        </span>
+        {(userRole === "admin" || userRole === "chairman") && (
+          <TabsContent value="benchmarks" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Industry Benchmarks</CardTitle>
+                <CardDescription>
+                  Compare your performance against industry standards
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {Object.entries(benchmarkData).map(([category, data]) => (
+                    <div key={category} className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <h4 className="font-medium capitalize">{category}</h4>
+                        <div className="flex items-center gap-4 text-sm">
+                          <span className="text-muted-foreground">
+                            Industry: {data.industry}%
+                          </span>
+                          <span className="text-muted-foreground">
+                            Best: {data.best}%
+                          </span>
+                          <span
+                            className={`font-bold ${getBenchmarkColor(
+                              data.current,
+                              data.industry,
+                              data.best,
+                            )}`}
+                          >
+                            You: {data.current}%
+                          </span>
+                        </div>
+                      </div>
+                      <div className="relative">
+                        <Progress value={data.current} className="h-3" />
+                        <div
+                          className="absolute top-0 h-3 w-1 bg-gray-400"
+                          style={{ left: `${data.industry}%` }}
+                        />
+                        <div
+                          className="absolute top-0 h-3 w-1 bg-green-600"
+                          style={{ left: `${data.best}%` }}
+                        />
+                      </div>
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>0%</span>
+                        <span>Industry Avg</span>
+                        <span>Best in Class</span>
+                        <span>100%</span>
                       </div>
                     </div>
-                    <div className="relative">
-                      <Progress value={data.current} className="h-3" />
-                      <div
-                        className="absolute top-0 h-3 w-1 bg-gray-400"
-                        style={{ left: `${data.industry}%` }}
-                      />
-                      <div
-                        className="absolute top-0 h-3 w-1 bg-green-600"
-                        style={{ left: `${data.best}%` }}
-                      />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        )}
+
+        {availableKPIs.includes("financial") && (
+          <TabsContent value="financial" className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Financial Performance</CardTitle>
+                  <CardDescription>
+                    Key financial metrics and indicators
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center p-4 bg-green-50 rounded-lg">
+                      <div className="text-2xl font-bold text-green-600">
+                        $10.5M
+                      </div>
+                      <div className="text-sm text-green-600">
+                        Annual Revenue
+                      </div>
                     </div>
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>0%</span>
-                      <span>Industry Avg</span>
-                      <span>Best in Class</span>
-                      <span>100%</span>
+                    <div className="text-center p-4 bg-blue-50 rounded-lg">
+                      <div className="text-2xl font-bold text-blue-600">
+                        15.2%
+                      </div>
+                      <div className="text-sm text-blue-600">Profit Margin</div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-sm font-medium">ROE</span>
+                      <span className="text-sm">18.5%</span>
+                    </div>
+                    <Progress value={18.5} className="h-2" />
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-sm font-medium">
+                        Debt-to-Equity
+                      </span>
+                      <span className="text-sm">0.35</span>
+                    </div>
+                    <Progress value={35} className="h-2" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Shareholder Value</CardTitle>
+                  <CardDescription>
+                    Metrics important to shareholders
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center p-3 bg-purple-50 rounded-lg">
+                        <div className="text-xl font-bold text-purple-600">
+                          $2.50
+                        </div>
+                        <div className="text-xs text-purple-600">
+                          Dividend/Share
+                        </div>
+                      </div>
+                      <div className="text-center p-3 bg-orange-50 rounded-lg">
+                        <div className="text-xl font-bold text-orange-600">
+                          22.3%
+                        </div>
+                        <div className="text-xs text-orange-600">
+                          Share Growth
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>Market Cap Growth</span>
+                        <span className="font-medium">+12.5%</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span>Book Value per Share</span>
+                        <span className="font-medium">$45.30</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span>P/E Ratio</span>
+                        <span className="font-medium">16.2</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   );
