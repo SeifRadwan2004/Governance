@@ -508,9 +508,14 @@ export function MemberDirectory() {
                 ? "View board member profiles and public information"
                 : "View board member profiles and contact information"}
           </p>
-          <Badge variant="outline" className="mt-2">
-            {getUserRoleDisplayName(userRole)}
-          </Badge>
+          <div className="flex gap-2 mt-2">
+            <Badge variant="outline">{getUserRoleDisplayName(userRole)}</Badge>
+            {/* Debug info */}
+            <Badge variant="outline" className="text-xs">
+              Role: {userRole} | Can Manage:{" "}
+              {canManageMembers(userRole) ? "Yes" : "No"}
+            </Badge>
+          </div>
         </div>
         {canManageMembers(userRole) && (
           <Button className="bg-corporate-600 hover:bg-corporate-700">
