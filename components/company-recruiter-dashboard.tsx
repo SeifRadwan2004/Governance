@@ -401,7 +401,10 @@ export function CompanyRecruiterDashboard() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">
+            <Button
+              onClick={handleManageCompanyProfile}
+              className="w-full bg-blue-600 hover:bg-blue-700"
+            >
               <Edit className="mr-2 h-4 w-4" />
               Manage Company Profile
             </Button>
