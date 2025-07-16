@@ -530,19 +530,35 @@ export function InvestmentAnalystDashboard() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleNewReport}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Plus className="h-5 w-5 mb-2" />
                   New Report
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleViewAnalytics}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <BarChart3 className="h-5 w-5 mb-2" />
                   View Analytics
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleEarnings}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Wallet className="h-5 w-5 mb-2" />
                   Earnings
                 </Button>
-                <Button variant="outline" className="h-auto flex-col py-4">
+                <Button
+                  onClick={handleMarketData}
+                  variant="outline"
+                  className="h-auto flex-col py-4"
+                >
                   <Globe className="h-5 w-5 mb-2" />
                   Market Data
                 </Button>
