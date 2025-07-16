@@ -1419,8 +1419,8 @@ export function Settings() {
                   </span>
                 </div>
               </div>
-            </CardContent>
-                    </Card>
+                        </CardContent>
+          </Card>
         </TabsContent>
         )}
       </Tabs>
