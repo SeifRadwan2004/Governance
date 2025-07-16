@@ -50,6 +50,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
+import { UserRole, getCurrentUserRole } from "@/lib/permissions";
 
 export default function BoardPage() {
   const [activeTab, setActiveTab] = useState("members");
