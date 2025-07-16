@@ -585,7 +585,7 @@ export function CompanyRecruiterDashboard() {
                       <SelectValue placeholder="Rating" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Ratings</SelectItem>
+                      <SelectItem value="all">All Ratings</SelectItem>
                       <SelectItem value="4.5">4.5+ Stars</SelectItem>
                       <SelectItem value="4.0">4.0+ Stars</SelectItem>
                       <SelectItem value="3.5">3.5+ Stars</SelectItem>
