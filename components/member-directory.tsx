@@ -517,7 +517,7 @@ export function MemberDirectory() {
             </Badge>
           </div>
         </div>
-        {canManageMembers(userRole) && (
+        {(userRole === "admin" || userRole === "chairman") && (
           <Button className="bg-corporate-600 hover:bg-corporate-700">
             <Plus className="mr-2 h-4 w-4" />
             Add Member
