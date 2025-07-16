@@ -56,7 +56,12 @@ export default function BoardPage() {
   const [activeTab, setActiveTab] = useState("members");
   const [searchQuery, setSearchQuery] = useState("");
   const [filterRole, setFilterRole] = useState("all");
+  const [userRole, setUserRole] = useState<UserRole>("shareholder");
   const { toast } = useToast();
+
+  useEffect(() => {
+    setUserRole(getCurrentUserRole());
+  }, []);
 
   // Mock board members data
   const boardMembers = [
