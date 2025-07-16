@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BarChart3,
   TrendingUp,
@@ -42,10 +42,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  UserRole,
+  getFilteredKPIs,
+  getCurrentUserRole,
+  getUserRoleDisplayName,
+} from "@/lib/permissions";
+import { Badge } from "@/components/ui/badge";
 
 export default function KPIsPage() {
   const [timeframe, setTimeframe] = useState("30d");
   const [activeTab, setActiveTab] = useState("overview");
+  const [userRole, setUserRole] = useState<UserRole>("shareholder");
+  const [availableKPIs, setAvailableKPIs] = useState<string[]>([]);
+
+  useEffect(() => {
+    const role = getCurrentUserRole();
+    setUserRole(role);
+    setAvailableKPIs(getFilteredKPIs(role));
+  }, []);
 
   // Mock KPI data - in a real app, this would come from an API
   const kpiData = {
