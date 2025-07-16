@@ -79,6 +79,76 @@ export function CompanyRecruiterDashboard() {
   const [selectedSector, setSelectedSector] = useState("");
   const [experienceRange, setExperienceRange] = useState([5]);
   const [reputationFilter, setReputationFilter] = useState("");
+  const { toast } = useToast();
+
+  // Button handlers
+  const handleManageCompanyProfile = () => {
+    toast({
+      title: "Manage Company Profile",
+      description: "Opening company profile management form...",
+    });
+  };
+
+  const handleSearchCandidates = () => {
+    setActiveTab("candidates");
+    toast({
+      title: "Search Candidates",
+      description: "Navigating to candidate search section...",
+    });
+  };
+
+  const handleSendInvitation = () => {
+    setActiveTab("invitations");
+    toast({
+      title: "Send Invitation",
+      description: "Opening invitation management section...",
+    });
+  };
+
+  const handlePostToWall = () => {
+    setActiveTab("company-wall");
+    toast({
+      title: "Post to Wall",
+      description: "Opening company wall section...",
+    });
+  };
+
+  const handleCreateReport = () => {
+    toast({
+      title: "Create Report",
+      description: "Generating recruitment analytics report...",
+    });
+  };
+
+  const handleViewCandidate = (candidateId: number) => {
+    const candidate = candidates.find((c) => c.id === candidateId);
+    toast({
+      title: "View Candidate",
+      description: `Opening detailed profile for ${candidate?.name}...`,
+    });
+  };
+
+  const handleInviteCandidate = (candidateId: number) => {
+    const candidate = candidates.find((c) => c.id === candidateId);
+    toast({
+      title: "Send Invitation",
+      description: `Sending board invitation to ${candidate?.name}...`,
+    });
+  };
+
+  const handleSendNewInvitation = () => {
+    toast({
+      title: "New Invitation",
+      description: "Opening invitation creation form...",
+    });
+  };
+
+  const handleCreatePost = () => {
+    toast({
+      title: "Create Post",
+      description: "Opening post creation form...",
+    });
+  };
 
   // Mock data
   const companyInfo = {
