@@ -81,6 +81,99 @@ export function InvestmentAnalystDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSector, setSelectedSector] = useState("all");
+  const { toast } = useToast();
+
+  // Button handlers
+  const handleEditProfile = () => {
+    toast({
+      title: "Edit Profile",
+      description: "Opening analyst profile editor...",
+    });
+  };
+
+  const handleNewReport = () => {
+    setActiveTab("reports");
+    toast({
+      title: "New Report",
+      description: "Opening report creation wizard...",
+    });
+  };
+
+  const handleViewAnalytics = () => {
+    setActiveTab("analytics");
+    toast({
+      title: "View Analytics",
+      description: "Navigating to analytics dashboard...",
+    });
+  };
+
+  const handleEarnings = () => {
+    setActiveTab("earnings");
+    toast({
+      title: "Earnings",
+      description: "Opening earnings management section...",
+    });
+  };
+
+  const handleMarketData = () => {
+    setActiveTab("market-data");
+    toast({
+      title: "Market Data",
+      description: "Accessing real-time market data feed...",
+    });
+  };
+
+  const handleCreateNewReport = () => {
+    toast({
+      title: "Create New Report",
+      description: "Opening investment report creation form...",
+    });
+  };
+
+  const handleViewReport = (reportId: number) => {
+    const report = publishedReports.find((r) => r.id === reportId);
+    toast({
+      title: "View Report",
+      description: `Opening detailed view for "${report?.title}"...`,
+    });
+  };
+
+  const handleEditReport = (reportId: number) => {
+    const report = publishedReports.find((r) => r.id === reportId);
+    toast({
+      title: "Edit Report",
+      description: `Opening editor for "${report?.title}"...`,
+    });
+  };
+
+  const handleReportAnalytics = (reportId: number) => {
+    const report = publishedReports.find((r) => r.id === reportId);
+    toast({
+      title: "Report Analytics",
+      description: `Opening analytics for "${report?.title}"...`,
+    });
+  };
+
+  const handleAddPaymentMethod = () => {
+    toast({
+      title: "Add Payment Method",
+      description: "Opening payment method setup...",
+    });
+  };
+
+  const handleDownloadInvoice = (month: string) => {
+    toast({
+      title: "Download Invoice",
+      description: `Generating invoice for ${month}...`,
+    });
+  };
+
+  const handleRefreshMarketData = () => {
+    toast({
+      title: "Refresh Market Data",
+      description: "Updating market data from live feeds...",
+    });
+  };
 
   // Mock data
   const analystProfile = {
