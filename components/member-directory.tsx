@@ -449,13 +449,22 @@ export function MemberDirectory() {
             Board Members Directory
           </h2>
           <p className="text-muted-foreground">
-            Comprehensive member profiles, analytics, and performance tracking
+            {canManageMembers(userRole)
+              ? "Comprehensive member profiles, analytics, and performance tracking"
+              : userRole === "shareholder"
+                ? "View board member profiles and public information"
+                : "View board member profiles and contact information"}
           </p>
+          <Badge variant="outline" className="mt-2">
+            {getUserRoleDisplayName(userRole)}
+          </Badge>
         </div>
-        <Button className="bg-corporate-600 hover:bg-corporate-700">
-          <Plus className="mr-2 h-4 w-4" />
-          Add Member
-        </Button>
+        {canManageMembers(userRole) && (
+          <Button className="bg-corporate-600 hover:bg-corporate-700">
+            <Plus className="mr-2 h-4 w-4" />
+            Add Member
+          </Button>
+        )}
       </div>
 
       {/* KPI Dashboard */}
